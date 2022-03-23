@@ -105,7 +105,7 @@ rule quality_filter_with_bamtools:
     shell:
         """
         bamtools filter -in {input.marked_bam} -forceCompression -mapQuality '{params.mapQ}' -isDuplicate false -isFailedQC false -isMapped true -isMateMapped true -isPaired true -isPrimaryAlignment true -isProperPair true -out {output.filtered_bam}
-        #samtools index {output.filtered_bam}
+        samtools index {output.filtered_bam}
         """
 
 ##################################################################
@@ -143,8 +143,6 @@ rule count_reads_in_RT_windows:
     log: "results/logs/snakelogs/count_reads_in_RT_windows.{sample}.log"
     shell:
         """
-        ml R
-        ml bioconductor
         Rscript workflow/scripts/CountReadsOverBed_ver02.R {params.RT_windows} {input.doubleFiltered_bam} {output.counts}
         """
 
