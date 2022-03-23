@@ -1,4 +1,4 @@
-samples_table: "config/samples.csv"
+samples_table: "config/testSamples.csv"
 fastp_cpus: 8
 bwa_cpus: 12
 picard_memory: "24G"
