@@ -26,7 +26,7 @@
 * [References](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#references)
 
 ## Description of individual steps in pipeline:
-![DAG of Test Pipeline](resources/dag.pdf)
+![DAG of Test Pipeline](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/dag.pdf)
 
 ### 1.  trim_reads_with_fastp
 ```bash
