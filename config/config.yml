@@ -1,0 +1,9 @@
+samples_table: "config/samples.csv"
+fastp_cpus: 8
+bwa_cpus: 12
+picard_memory: "24G"
+bwa_genome: "/Volumes/hts_core/Shared/hg19/bwa_7_6_indexed/hg19.fasta"
+bamtools_filter_mapQ: ">10"
+bedtools_intersect_blacklist: "resources/Satellites.bed"
+bedtools_intersect_greylist: "resources/HiCountWindows.bed" 
+RT_windows: "resources/RTWindows_danRer11_noAlts_ver01.bed"
