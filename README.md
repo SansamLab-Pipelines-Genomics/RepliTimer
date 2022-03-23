@@ -231,18 +231,46 @@ conda deactivate
 
 ## References:
 
-Goloborodko, A., Nezar Abdennur, Venev, S., Hbbrandao, & Gfudenberg. (2019). mirnylab/pairtools v0.3.0 (v0.3.0) [Computer software]. Zenodo. https://doi.org/10.5281/ZENODO.2649383
+### fastp
 
-Abdennur, N., Goloborodko, A., Imakaev, M., Kerpedjiev, P., Fudenberg, G., Oullette, S., Lee, S., Strobelt, H., Gehlenborg, N., & Mirny, L. (2021). open2c/cooler: v0.8.11 (v0.8.11) [Computer software]. Zenodo. https://doi.org/10.5281/ZENODO.4655850
+Chen S, Zhou Y, Chen Y, Gu J. fastp: an ultra-fast all-in-one FASTQ preprocessor. Bioinformatics. 2018;34(17):i884-i890. doi:10.1093/bioinformatics/bty560
 
-Lee, S., Bakker, C. R., Vitzthum, C., Alver, B. H., & Park, P. J. (2022). Pairs and Pairix: a file format and a tool for efficient storage and retrieval for Hi-C read pairs. In C. Alkan (Ed.), Bioinformatics (Vol. 38, Issue 6, pp. 1729–1731). Oxford University Press (OUP). https://doi.org/10.1093/bioinformatics/btab870
-
-Durand, N. C., Shamim, M. S., Machol, I., Rao, S. S. P., Huntley, M. H., Lander, E. S., & Aiden, E. L. (2016). Juicer provides a one-click system for analyzing loop-resolution hi-c experiments. Cell Systems, 3(1), 95–98. https://doi.org/10.1016/j.cels.2016.07.002
+### Samtools
 
 Danecek, P., Bonfield, J. K., Liddle, J., Marshall, J., Ohan, V., Pollard, M. O., Whitwham, A., Keane, T., McCarthy, S. A., Davies, R. M., & Li, H. (2021). Twelve years of samtools and bcftools. GigaScience, 10(2), giab008. https://doi.org/10.1093/gigascience/giab008
 
+### BWA
+
 Li, H. (2013). Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM. ArXiv:1303.3997 [q-Bio]. http://arxiv.org/abs/1303.3997
 
+### Picard tools
+
+http://broadinstitute.github.io/picard/
+
+### bamtools
+
+Barnett DW, Garrison EK, Quinlan AR, Stromberg MP, Marth GT. BamTools: a C++ API and toolkit for analyzing and managing BAM files. Bioinformatics. 2011;27(12):1691-1692.
+
+### bedtools
+
+Quinlan AR, Hall IM. BEDTools: a flexible suite of utilities for comparing genomic features. Bioinformatics. 2010;26(6):841-842.
+
+### R
+
+R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.
+URL https://www.R-project.org/.
+
+### rtracklayer
+
+Lawrence M, Gentleman R, Carey V. Rtracklayer: an r package for interfacing with genome browsers. Bioinformatics. 2009;25(14):1841-1842.
+
+### bamsignals
+
+Alessandro Mammana and Johannes Helmuth (2021). bamsignals: Extract read count signals from bam files. R package version 1.26.0.
+https://github.com/lamortenera/bamsignals
+
+### Snakemake
 Köster, J., & Rahmann, S. (2012). Snakemake—A scalable bioinformatics workflow engine. Bioinformatics (Oxford, England), 28(19), 2520–2522. https://doi.org/10.1093/bioinformatics/bts480
 
+### Python
 Anaconda Software Distribution. (2020). Anaconda Documentation. Anaconda Inc. Retrieved from https://docs.anaconda.com/
