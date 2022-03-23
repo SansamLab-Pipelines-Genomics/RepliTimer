@@ -23,6 +23,7 @@
   * [5.  Do a dry run](https://github.com/SansamLab/Process_RepTiming_Snakemake#5--do-a-dry-run)
   * [6.  Make a DAG diagram](https://github.com/SansamLab/Process_RepTiming_Snakemake#6--make-a-dag-diagram)
   * [7.  Run on cluster with slurm](https://github.com/SansamLab/Process_RepTiming_Snakemake#7--run-on-cluster-with-slurm)
+* [References](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#references)
 
 ## Description of individual steps in pipeline:
 ![DAG of Pipeline](dag.svg)
