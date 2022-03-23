@@ -43,7 +43,6 @@ rule trim_reads_with_fastp:
     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
     shell:
         """
-        ml fastp
         fastp -i {input.fq1} -I {input.fq2} -o {output.trimmed1} -O {output.trimmed2} -h {output.fastp_report} --json {output.fastp_json} -R "{wildcards.sample}" -w {params.threads}
         """
 
@@ -64,8 +63,6 @@ rule align_reads_with_bwamem:
     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
     shell:
         """
-        ml bwa
-        ml samtools
         bwa mem -M -t {params.threads} {params.genome} {input.R1} {input.R2} | samtools sort -@ {params.threads} > {output.bam}
         samtools index -@ {params.threads} {output.bam} > {output.bai}
         """
@@ -81,14 +78,13 @@ rule mark_duplicates_with_picard:
         memory=config["picard_memory"]
     output:
         marked_bam="results/duplicatesMarkedBam/{sample}.bam",
-        marked_bai="results/duplicatesMarkedBam/{sample}.bai",
+        marked_bai="results/duplicatesMarkedBam/{sample}.bam.bai",
         marked_metrics="results/logs/picard_metrics/{sample}.marked.duplicates_metrics.txt"
     log: "results/logs/snakelogs/mark_duplicates_with_picard.{sample}.log"
     shell:
         """
-        ml picard
-        ml samtools
         JAVA_MEM_OPTS={params.memory}
+        RAM=$(echo $JAVA_MEM_OPTS | rev | cut -c2- | rev)
         picard MarkDuplicates COMPRESSION_LEVEL=9 VALIDATION_STRINGENCY=LENIENT MAX_RECORDS_IN_RAM=$((200000*RAM)) CREATE_INDEX=true I={input.bam} O={output.marked_bam} M={output.marked_metrics}
         samtools index {output.marked_bam}
         """
@@ -103,15 +99,13 @@ rule quality_filter_with_bamtools:
     params:
         mapQ=config["bamtools_filter_mapQ"]
     output:
-        filtered_bam="results/filteredBams/{sample}.bam",
-        filtered_bai="results/filteredBams/{sample}.bai"
+        filtered_bam="results/filteredBams/{sample}.bam"
+        #filtered_bai="results/filteredBams/{sample}.bam.bai"
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
     shell:
         """
-        ml bamtools
-        ml samtools
-        bamtools filter -in {input.marked_bam} -forceCompression -mapQuality {params.mapQ} -isDuplicate false -isFailedQC false -isMapped true -isMateMapped true -isPaired true -isPrimaryAlignment true -isProperPair true > {output.filtered_bam}
-        samtools index {output.filtered_bam}
+        bamtools filter -in {input.marked_bam} -forceCompression -mapQuality '{params.mapQ}' -isDuplicate false -isFailedQC false -isMapped true -isMateMapped true -isPaired true -isPrimaryAlignment true -isProperPair true -out {output.filtered_bam}
+        #samtools index {output.filtered_bam}
         """
 
 ##################################################################
@@ -129,8 +123,6 @@ rule blacklist_filter_with_bedtools:
     log: "results/logs/snakelogs/blacklist_filter_with_bedtools.{sample}.log"
     shell:
         """
-        ml bedtools
-        ml samtools
         bedtools intersect -v -split -abam {input.filtered_bam} -b {params.HiCount_BED_FILENAME} > {input.filtered_bam}_FILTERED1.BAM
         bedtools intersect -v -split -f 0.3 -abam {input.filtered_bam}_FILTERED1.BAM -b {params.Sat_BED_FILENAME} > {output.doubleFiltered_bam}
         rm {input.filtered_bam}_FILTERED1.BAM
