@@ -56,7 +56,7 @@ rule align_reads_with_bwamem:
         R1="results/trimmed/{sample}_trimmed_R1.fastq.gz",
         R2="results/trimmed/{sample}_trimmed_R2.fastq.gz"
     params:
-        genome=config["bwa_genome"]
+        genome=config["bwa_genome"],
         threads=config["bwa_cpus"]
     output:
         bam="results/aligned/{sample}.bam",
