@@ -261,10 +261,6 @@ Quinlan AR, Hall IM. BEDTools: a flexible suite of utilities for comparing genom
 R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.
 URL https://www.R-project.org/.
 
-### rtracklayer
-
-Lawrence M, Gentleman R, Carey V. Rtracklayer: an r package for interfacing with genome browsers. Bioinformatics. 2009;25(14):1841-1842.
-
 ### bamsignals
 
 Alessandro Mammana and Johannes Helmuth (2021). bamsignals: Extract read count signals from bam files. R package version 1.26.0.
