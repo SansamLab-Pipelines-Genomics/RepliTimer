@@ -1,7 +1,7 @@
 samples_table: "config/testSamples.csv"
-fastp_cpus: 8
+fastp_cpus: 6
 bwa_cpus: 12
-picard_memory: "24G"
+picard_memory: "8G"
 bwa_genome: "/Volumes/hts_core/Shared/zebrafish/danRer11/noAlts/danRer11_noAlts.fa"
 bamtools_filter_mapQ: ">10"
 bedtools_intersect_blacklist: "resources/Satellites.bed"
