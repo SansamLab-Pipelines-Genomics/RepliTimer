@@ -12,8 +12,15 @@ bamFileName <- args[2]
 outputFileName <- args[3]
 
 # import bed file
-library(rtracklayer)
-bedFile <- rtracklayer::import(bedFilename)
+bedFile <- read.table(file=bedFilename,
+                      header=F,
+                      sep="\t")[,c(1,2,3)]
+names(bedFile) <- c("seqnames","start","end")
+bedFile <- GenomicRanges::makeGRangesFromDataFrame(bedFile,
+                                                   ignore.strand = T,
+                                                   seqnames.field=c("seqnames"),
+                                                   start.field = "start",
+                                                   end.field = "end")
 counts <- bamsignals::bamCount(bamFileName,
                    bedFile,
                    verbose=FALSE,
