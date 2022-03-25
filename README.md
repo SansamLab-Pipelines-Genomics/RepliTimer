@@ -209,14 +209,14 @@ snakemake --dag | dot -Tpdf > dag.pdf
 ### 7.  Run on cluster with slurm.
 This snakemake pipeline could be executed without slurm, but if an hpc with slurm is used, the following will start the pipeline with the parameters defined in the config/cluster_config.yml file.
 ```bash
-sbatch --wrap="\
+sbatch --constraint=westmere \
+--wrap="\
 snakemake \
 -R \
 -j 999 \
 --cluster-config config/cluster_config.yml \
 --cluster '\
 sbatch \
---constraint=westmere \
 -A {cluster.account} \
 -p {cluster.partition} \
 --cpus-per-task {cluster.cpus-per-task}  \
