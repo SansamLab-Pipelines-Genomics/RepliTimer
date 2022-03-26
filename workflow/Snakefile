@@ -146,6 +146,32 @@ rule count_reads_in_RT_windows:
         Rscript workflow/scripts/CountReadsOverBed_ver02.R {params.RT_windows} {input.doubleFiltered_bam} {output.counts}
         """
 
+#################################################################
+##                      Merge count tables                     ##
+#################################################################
+
+rule merge_count_tables:
+        input:
+            counts_bedgraphs=expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index)
+            #sorted_pairs=expand("results/temp_sorted_pairs/{sample}_sorted.pairs.gz",sample=samples_table.index)
+        output:
+            #merged=expand("results/sorted_pairs/{sample}_sorted.pairs.gz",sample=config["merged_sample_name"])
+        params:
+            sample_list=' '.join(expand("{sample}",sample=samples_table.index)),
+            counts_bedgraphs_list=' '.join(expand("results/temp_sorted_pairs/{sample}_sorted.pairs.gz",sample=samples_table.index)),
+            counts_temp_list=' '.join(expand("results/temp_merge/{sample}_sorted.pairs.gz",sample=samples_table.index))
+            #filename=config["merged_sample_name"]
+        log: expand("results/logs/snakelogs/merge_count_tables.{sample}.log",sample=config["merged_sample_name"])
+        shell:
+            """
+            SAMPLES=( {params.sample_list} )
+            BEDGRAPHS=( {params.counts_bedgraphs_list} )
+            mkdir results/temp_merge
+            for f in ${!BEDGRAPHS[@]}; do 
+                $f
+            done 
+            
+            """
 
 # #################################################################
 # ##                    Reformat count tables                    ##
