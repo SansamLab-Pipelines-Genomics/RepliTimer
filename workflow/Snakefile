@@ -24,7 +24,8 @@ def fq_dict_from_sample(wildcards):
 # to run snakemake without explicitly requesting any output files on the command line, we must request output files in the first rule. Therefore we include this otherwise useless rule here  
 rule all:
     input:
-        expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index)
+        expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index),
+        "results/merged/test_counts.txt"
 
 ##################################################################
 ##                          Trim reads                          ##
@@ -150,27 +151,38 @@ rule count_reads_in_RT_windows:
 ##                      Merge count tables                     ##
 #################################################################
 
+def bedgraph_inputs(wildcards):
+    files = expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
+    return files
+
+
 rule merge_count_tables:
         input:
-            counts_bedgraphs=expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index)
-            #sorted_pairs=expand("results/temp_sorted_pairs/{sample}_sorted.pairs.gz",sample=samples_table.index)
+            bedgraph_inputs
+            #counts="results/counts/{sample}_counts.bedgraph"
+            #counts_bedgraphs=expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
         output:
-            #merged=expand("results/sorted_pairs/{sample}_sorted.pairs.gz",sample=config["merged_sample_name"])
+            merged="results/merged/{sample}_counts.txt"
         params:
-            sample_list=' '.join(expand("{sample}",sample=samples_table.index)),
-            counts_bedgraphs_list=' '.join(expand("results/temp_sorted_pairs/{sample}_sorted.pairs.gz",sample=samples_table.index)),
-            counts_temp_list=' '.join(expand("results/temp_merge/{sample}_sorted.pairs.gz",sample=samples_table.index))
-            #filename=config["merged_sample_name"]
-        log: expand("results/logs/snakelogs/merge_count_tables.{sample}.log",sample=config["merged_sample_name"])
+            #sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
+            #counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
+            ##counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index))
+        log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         shell:
             """
-            SAMPLES=( {params.sample_list} )
-            BEDGRAPHS=( {params.counts_bedgraphs_list} )
-            mkdir results/temp_merge
-            for f in ${!BEDGRAPHS[@]}; do 
-                $f
-            done 
-            
+            touch {output.merged}
+            # SAMPLES=( {params.sample_list} )
+            # BEDGRAPHS=( {params.counts_bedgraphs_list} )
+            # TEMP_COUNTS=( {params.counts_temp_list} )
+            # mkdir results/temp_merge
+            # for i in ${{!BEDGRAPHS[@]}}; do 
+            #     echo -e "\t\t\t${{SAMPLES[i]}}" > ${{TEMP_COUNTS[i]}}.header
+            #     cut -f4 ${{BEDGRAPHS[i]}} > ${{TEMP_COUNTS[i]}}.counts
+            #     cat ${{TEMP_COUNTS[i]}}.header ${{TEMP_COUNTS[i]}}.counts > ${{TEMP_COUNTS[i]}}
+            #     rm ${{TEMP_COUNTS[i]}}.header
+            #     rm ${{TEMP_COUNTS[i]}}.counts
+            # done 
+            # paste {params.counts_temp_list} > {output.merged}
             """
 
 # #################################################################
