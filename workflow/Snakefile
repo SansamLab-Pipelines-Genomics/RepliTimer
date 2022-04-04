@@ -159,14 +159,15 @@ def bedgraph_inputs(wildcards):
 rule merge_count_tables:
         input:
             bedgraph_inputs
-            #counts="results/counts/{sample}_counts.bedgraph"
-            #counts_bedgraphs=expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
         output:
-            merged="results/merged/{sample}_counts.txt"
+            merged="results/merged/{sample}_counts.txt",
+            rse_counts="results/rse/{sample}_rse.rds"
         params:
             sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
             counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
-            counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index))
+            counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index)),
+            samples_table=config["samples_table"],
+            RT_windows=config["RT_windows"]
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         shell:
             """
@@ -182,7 +183,12 @@ rule merge_count_tables:
                 rm ${{TEMP_COUNTS[i]}}.counts
             done 
             paste {params.counts_temp_list} > {output.merged}
+            rm -rf results/temp_merge/
+            Rscript workflow/scripts/MakeCountsRSE_ver01.R {output.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
             """
+
+
+
 
 # #################################################################
 # ##                    Reformat count tables                    ##
