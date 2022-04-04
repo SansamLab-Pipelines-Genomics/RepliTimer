@@ -62,3 +62,11 @@ merge_count_tables:
     name: "{rule}.{wildcards.sample}"
     output: results/logs/{rule}.{wildcards.sample}.log
     error: results/logs/{rule}.{wildcards.sample}.err
+
+process_count_tables:
+    cpus-per-task: 2
+    mem:  16G
+    cores: 2
+    name: "{rule}.{wildcards.sample}"
+    output: results/logs/{rule}.{wildcards.sample}.log
+    error: results/logs/{rule}.{wildcards.sample}.err

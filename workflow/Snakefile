@@ -25,7 +25,7 @@ def fq_dict_from_sample(wildcards):
 rule all:
     input:
         expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index),
-        "results/merged/test_counts.txt"
+        expand("results/processed_rse/{sample}_processed_rse.rds", sample = config["experiment_name"])
 
 ##################################################################
 ##                          Trim reads                          ##
@@ -218,7 +218,21 @@ rule merge_count_tables:
             Rscript workflow/scripts/MakeCountsRSE_ver01.R {output.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
             """
 
-
+rule process_count_tables:
+        input:
+            rse_counts="results/rse/{sample}_rse.rds"
+        output:
+            rse_processed="results/processed_rse/{sample}_processed_rse.rds"
+        params:
+            RT_windows=config["RT_windows"]
+        envmodules:
+            "R/3.6.0",
+            "bioconductor/3.14"
+        log: "results/logs/snakelogs/{sample}_process_count_tables.log"
+        shell:
+            """
+            Rscript workflow/scripts/CalculateQuotientsSmoothScale_ver01.R {input.rse_counts} {output.rse_processed}
+            """
 
 
 # #################################################################

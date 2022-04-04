@@ -1,3 +1,4 @@
+experiment_name: "test"
 samples_table: "config/rif1Samples.csv"
 fastp_cpus: 6
 bwa_cpus: 12
