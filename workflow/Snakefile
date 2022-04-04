@@ -41,6 +41,10 @@ rule trim_reads_with_fastp:
         trimmed2="results/trimmed/{sample}_trimmed_R2.fastq.gz",
         fastp_report="results/qc/fastp_reports/{sample}.html",
         fastp_json="results/qc/fastp_reports/{sample}.json"
+    envmodules:
+        "fastp/0.23.2"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
     shell:
         """
@@ -61,6 +65,11 @@ rule align_reads_with_bwamem:
     output:
         bam="results/aligned/{sample}.bam",
         bai="results/aligned/{sample}.bam.bai"
+    envmodules:
+        "bwa/0.7.15",
+        "samtools/1.14"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
     shell:
         """
@@ -81,6 +90,11 @@ rule mark_duplicates_with_picard:
         marked_bam="results/duplicatesMarkedBam/{sample}.bam",
         marked_bai="results/duplicatesMarkedBam/{sample}.bam.bai",
         marked_metrics="results/logs/picard_metrics/{sample}.marked.duplicates_metrics.txt"
+    envmodules:
+        "samtools/1.14",
+        "picard/2.21.2"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/mark_duplicates_with_picard.{sample}.log"
     shell:
         """
@@ -102,6 +116,11 @@ rule quality_filter_with_bamtools:
     output:
         filtered_bam="results/filteredBams/{sample}.bam"
         #filtered_bai="results/filteredBams/{sample}.bam.bai"
+    envmodules:
+        "samtools/1.14",
+        "bamtools/2.5.1"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
     shell:
         """
@@ -121,6 +140,11 @@ rule blacklist_filter_with_bedtools:
         Sat_BED_FILENAME=config["bedtools_intersect_blacklist"]
     output:   
         doubleFiltered_bam="results/doubleFilteredBams/{sample}.bam"
+    envmodules:
+        "samtools/1.14",
+        "bedtools/2.30.0"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/blacklist_filter_with_bedtools.{sample}.log"
     shell:
         """
@@ -141,6 +165,11 @@ rule count_reads_in_RT_windows:
         RT_windows=config["RT_windows"]
     output:
         counts="results/counts/{sample}_counts.bedgraph"
+    envmodules:
+        "R/3.6.0",
+        "bioconductor/3.14"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/count_reads_in_RT_windows.{sample}.log"
     shell:
         """
@@ -155,7 +184,6 @@ def bedgraph_inputs(wildcards):
     files = expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
     return files
 
-
 rule merge_count_tables:
         input:
             bedgraph_inputs
@@ -168,6 +196,9 @@ rule merge_count_tables:
             counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index)),
             samples_table=config["samples_table"],
             RT_windows=config["RT_windows"]
+        envmodules:
+            "R/3.6.0",
+            "bioconductor/3.14"
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         shell:
             """

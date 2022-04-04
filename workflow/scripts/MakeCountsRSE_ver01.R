@@ -4,6 +4,10 @@
 # version 01
 # April 1, 2022
 
+#load libraries
+library(SummarizedExperiment)
+library(GenomicRanges)
+
 #get arguments from command line input
 args <- commandArgs(trailingOnly = TRUE)
 
