@@ -214,6 +214,7 @@ sbatch --constraint=westmere \
 snakemake \
 -R \
 -j 999 \
+--latency-wait 100 \
 --cluster-config config/cluster_config.yml \
 --cluster '\
 sbatch \
