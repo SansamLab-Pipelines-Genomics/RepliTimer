@@ -17,13 +17,13 @@ RTWindowsBedFile <- args[3]
 OutputFilename <- args[4]
 
 # read counts
-counts <- read.table("results/merged/test_counts.txt",header=T)
+counts <- read.table(countsTable,header=T)
 
 # read coldata
-coldata <- read.csv("config/rif1Samples.csv")
+coldata <- read.csv(colData)
 
 # read RT window ranges
-ranges.df <- read.table("resources/RTWindows_danRer11_noAlts_ver01.bed")
+ranges.df <- read.table(RTWindowsBedFile)
 
 # convert dataframe to genomicRanges
 ranges.gr <- GenomicRanges::makeGRangesFromDataFrame(ranges.df,seqnames.field="V1",start.field="V2",end.field="V3")
@@ -36,4 +36,4 @@ rse <- SummarizedExperiment::SummarizedExperiment(
                     checkDimnames=TRUE)
 
 # save ranged summarized experiment object as .rds file
-saveRDS(rse,"results/test.rds")
+saveRDS(rse,OutputFilename)
