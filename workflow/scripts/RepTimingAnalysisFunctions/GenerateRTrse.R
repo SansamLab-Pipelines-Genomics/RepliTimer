@@ -29,9 +29,12 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
     }
   # calculate Smoothed Quotient Z Scores
     QuotientsSmoothedScaled_se <- ZScoreRseAssay(QuotientsSmoothed_se)
+  # calculate Log2 of Smoothed Quotients
+    QuotientsSmoothedLog2_se <- Log2RseAssay(QuotientsSmoothed_se)
   # rebuild rse with all values in assays
     rse <- QuotientsSmoothedScaled_se
     SummarizedExperiment::assay(rse,withDimnames=FALSE) <- NULL
+    SummarizedExperiment::assays(rse,withDimnames=FALSE)$Log2Ratios <- SummarizedExperiment::assay(QuotientsSmoothedLog2_se,withDimnames=FALSE)
     SummarizedExperiment::assays(rse,withDimnames=FALSE)$ZScores <- SummarizedExperiment::assay(QuotientsSmoothedScaled_se,withDimnames=FALSE)
     SummarizedExperiment::assays(rse,withDimnames=FALSE)$Smoothed <- SummarizedExperiment::assay(QuotientsSmoothed_se,withDimnames=FALSE)
     matches <- GenomicRanges::findOverlaps(SummarizedExperiment::rowRanges(rse),
@@ -39,6 +42,7 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
                                     type="equal")
     Quotients_se <- Quotients_se[subjectHits(matches),]
     SummarizedExperiment::assays(rse,withDimnames=FALSE)$Quotients <- SummarizedExperiment::assay(Quotients_se,withDimnames=FALSE)
+
 
   if(is.element('Replicate_ID', names(SummarizedExperiment::colData(Quotients_se)))){
     MedianQuotients_se <- CalculateReplicateQuotMedians(Quotients_se)
@@ -50,11 +54,14 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
       MedianQuotientsSmoothed_se <- SmoothRseAssay(MedianQuotients_se)
     }
     ##
+    MedianQuotientsSmoothedLog2_se <- Log2RseAssay(MedianQuotientsSmoothed_se)
     MedianQuotientsSmoothedScaled_se <- ZScoreRseAssay(MedianQuotientsSmoothed_se)
     rse2 <- MedianQuotientsSmoothedScaled_se
     rse3 <- SummarizedExperiment::SummarizedExperiment(colData = rbind(SummarizedExperiment::colData(rse2),
                                                                        SummarizedExperiment::colData(rse)),
                                                        rowRanges = SummarizedExperiment::rowRanges(rse))
+    Log2Ratios <- cbind(SummarizedExperiment::assay(MedianQuotientsSmoothedLog2_se,withDimnames=FALSE),
+                     SummarizedExperiment::assay(QuotientsSmoothedLog2_se,withDimnames=FALSE))
     ZScores <- cbind(SummarizedExperiment::assay(MedianQuotientsSmoothedScaled_se,withDimnames=FALSE),
                      SummarizedExperiment::assay(QuotientsSmoothedScaled_se,withDimnames=FALSE))
     Smoothed <- cbind(SummarizedExperiment::assay(MedianQuotientsSmoothed_se,withDimnames=FALSE),
@@ -63,10 +70,12 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
                        SummarizedExperiment::assay(Quotients_se,withDimnames=FALSE))
     #ZScoresAll <- matrix(scale(c(SummarizedExperiment::assay(MedianQuotientsSmoothedScaled_se))),
                                #nrow=nrow(SummarizedExperiment::assay(MedianQuotientsSmoothedScaled_se)))
+    SummarizedExperiment::assays(rse3,withDimnames=FALSE)$Log2Ratios <- Log2Ratios
     SummarizedExperiment::assays(rse3,withDimnames=FALSE)$ZScores <- ZScores
     SummarizedExperiment::assays(rse3,withDimnames=FALSE)$Smoothed <- Smoothed
     SummarizedExperiment::assays(rse3,withDimnames=FALSE)$Quotients <- Quotients
+    rse <- rse3
     #SummarizedExperiment::mcols(rse3) <- ZScoresAll
   }
-  return(rse3)
+  return(rse)
 }

@@ -26,7 +26,7 @@ GenomicRanges::end(ranges2) <- centers
 SummarizedExperiment::ranges(RTse) <- ranges2
 
 # load functions for calculating quotients and smooting and scaling RT values
-sapply(list.files(pattern="[.]R$", path="workflow/scripts/RepTimingAnalysisFunctions/", full.names=TRUE), source)
+sapply(list.files(pattern="[.]R$", path="workflow/scripts/RepTimingAnalysisFunctions", full.names=TRUE), source)
 
 # calculate quotients and then smooth and scale
 Processed_RTse <- GenerateRTrse(RTse,AllowGaps=FALSE)
