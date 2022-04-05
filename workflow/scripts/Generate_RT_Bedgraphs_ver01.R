@@ -4,12 +4,20 @@
 # version 01
 # April 5, 2022
 
+library(SummarizedExperiment)
+library(GenomicRanges)
+
+# load functions
+sapply(list.files(pattern="[.]R$", path="workflow/scripts/RepTimingAnalysisFunctions", full.names=TRUE), source)
+
 #get arguments from command line input
 args <- commandArgs(trailingOnly = TRUE)
 
-rse <- args[1]
+rseFile <- args[1]
 assay <- args[2]
-outputFileName <- args[3]
+
+rse <- readRDS(rseFile)
+
 SmplNmes <- row.names(colData(rse))
 
 for (SmplNme in SmplNmes) {
@@ -25,6 +33,3 @@ for (SmplNme in SmplNmes) {
                          sep="") 
                        )
 }
-
-files2zip <- dir(assay, full.names = TRUE)
-zip(zipfile = outputFileName, files = files2zip)
