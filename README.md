@@ -127,9 +127,6 @@ Note. The commands to do this will be different on your machine. These commands 
 ```bash
 ml slurm/20.02
 ml miniconda/4.11.0
-ml python/3.10.2
-ml pandas/1.4.2
-ml numpy/1.22.3
 ```
 ### 2.  Clone repository
 ```bash
