@@ -195,7 +195,7 @@ mv Process_RepTiming_Snakemake/ My_RT_Project_Folder/
 cd My_RT_Project_Folder
 ```
 ### 3.  Start the conda environment
-### 3A.  FIRST TIME ONLY:  Setup conda environment
+### 3A.  FIRST TIME ONLY:  Setup conda environment with snakemake
 ```bash
 # -f is the location of the environment .yml file. 
 ## The relative path assumes that you are in the root directory of this repository.
@@ -203,7 +203,7 @@ cd My_RT_Project_Folder
 conda env create -f workflow/envs/SnakemakeEnv.yml -p /s/sansam-lab/SnakemakeEnv 
 ```
 
-### 3B.  Activate conda environment
+### 3B.  Activate conda environment with snakemake
 ```bash
 conda activate /s/sansam-lab/SnakemakeEnv
 ```
@@ -268,7 +268,7 @@ snakemake --dag | dot -Tpdf > dag.pdf
 This snakemake pipeline could be executed without slurm, but if an hpc with slurm is used, the following will start the pipeline with the parameters defined in the config/cluster_config.yml file.
 
 #### 7A. Use conda environments
-If conda is to be used for rule-specific environments, you may find it useful to create the environments first. The '--conda-prefix' option is used to set a directory in which the ‘conda’ and ‘conda-archive’ directories are created. This directory may be changed to a stable or shared location.
+If conda is to be used for rule-specific environments, you may find it useful to create the environments first. Running 'snakemake' with the '--conda-create-envs-only' option will create the environments without running the pipeline. The '--conda-prefix' option is used to set a directory in which the ‘conda’ and ‘conda-archive’ directories are created. This directory may be changed to a stable or shared location.
 ```bash
 sbatch --mem 32G \
 --wrap="\
@@ -280,7 +280,7 @@ snakemake \
 --conda-frontend conda"
 ```
 
-To execute pipeline with conda environments:
+Once the environments are setup, you may execute pipeline with conda environments using the following command:
 ```bash
 sbatch --constraint=westmere \
 --wrap="\
