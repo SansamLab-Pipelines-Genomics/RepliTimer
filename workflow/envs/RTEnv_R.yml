@@ -255,4 +255,3 @@ dependencies:
   - zipp=3.8.0=pyhd8ed1ab_0
   - zlib=1.2.11=h166bdaf_1014
   - zstd=1.5.2=ha95c52a_0
-prefix: /s/sansam-lab/2022Mar29_Rif1Test/RTEnv_R
