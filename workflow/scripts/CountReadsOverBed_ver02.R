@@ -4,6 +4,10 @@
 # version 04
 # March 22, 2022
 
+#load libraries
+library(GenomicRanges)
+library(bamsignals)
+
 #get arguments from command line input
 args <- commandArgs(trailingOnly = TRUE)
 

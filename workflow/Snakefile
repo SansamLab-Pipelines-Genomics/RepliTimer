@@ -24,7 +24,12 @@ def fq_dict_from_sample(wildcards):
 # to run snakemake without explicitly requesting any output files on the command line, we must request output files in the first rule. Therefore we include this otherwise useless rule here  
 rule all:
     input:
-        expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index)
+        expand("results/counts/{sample}_counts.bedgraph", sample = samples_table.index),
+        expand("results/processed_rse/{sample}_processed_rse.rds", sample = config["experiment_name"]),
+        expand("results/bedgraphs/{sample}_Log2Ratios_bedgraphs.gz",sample = config["experiment_name"]),
+        expand("results/bedgraphs/{sample}_ZScores_bedgraphs.gz",sample = config["experiment_name"]),
+        expand("results/bedgraphs/{sample}_Smoothed_bedgraphs.gz",sample = config["experiment_name"]),
+        expand("results/bedgraphs/{sample}_Quotients_bedgraphs.gz",sample = config["experiment_name"])
 
 ##################################################################
 ##                          Trim reads                          ##
@@ -40,6 +45,10 @@ rule trim_reads_with_fastp:
         trimmed2="results/trimmed/{sample}_trimmed_R2.fastq.gz",
         fastp_report="results/qc/fastp_reports/{sample}.html",
         fastp_json="results/qc/fastp_reports/{sample}.json"
+    envmodules:
+        "fastp/0.23.2"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
     shell:
         """
@@ -60,6 +69,11 @@ rule align_reads_with_bwamem:
     output:
         bam="results/aligned/{sample}.bam",
         bai="results/aligned/{sample}.bam.bai"
+    envmodules:
+        "bwa/0.7.15",
+        "samtools/1.14"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
     shell:
         """
@@ -80,6 +94,11 @@ rule mark_duplicates_with_picard:
         marked_bam="results/duplicatesMarkedBam/{sample}.bam",
         marked_bai="results/duplicatesMarkedBam/{sample}.bam.bai",
         marked_metrics="results/logs/picard_metrics/{sample}.marked.duplicates_metrics.txt"
+    envmodules:
+        "samtools/1.14",
+        "picard/2.21.2"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/mark_duplicates_with_picard.{sample}.log"
     shell:
         """
@@ -101,6 +120,11 @@ rule quality_filter_with_bamtools:
     output:
         filtered_bam="results/filteredBams/{sample}.bam"
         #filtered_bai="results/filteredBams/{sample}.bam.bai"
+    envmodules:
+        "samtools/1.14",
+        "bamtools/2.5.1"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
     shell:
         """
@@ -120,6 +144,11 @@ rule blacklist_filter_with_bedtools:
         Sat_BED_FILENAME=config["bedtools_intersect_blacklist"]
     output:   
         doubleFiltered_bam="results/doubleFilteredBams/{sample}.bam"
+    envmodules:
+        "samtools/1.14",
+        "bedtools/2.30.0"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/blacklist_filter_with_bedtools.{sample}.log"
     shell:
         """
@@ -140,195 +169,115 @@ rule count_reads_in_RT_windows:
         RT_windows=config["RT_windows"]
     output:
         counts="results/counts/{sample}_counts.bedgraph"
+    envmodules:
+        "R/4.1.2-mkl",
+        "bioconductor/3.14"
+    conda:
+        "workflow/envs/RTEnv.yml"
     log: "results/logs/snakelogs/count_reads_in_RT_windows.{sample}.log"
     shell:
         """
         Rscript workflow/scripts/CountReadsOverBed_ver02.R {params.RT_windows} {input.doubleFiltered_bam} {output.counts}
         """
 
+#################################################################
+##                      Merge count tables                     ##
+#################################################################
 
-# #################################################################
-# ##                    Reformat count tables                    ##
-# #################################################################
+def bedgraph_inputs(wildcards):
+    files = expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
+    return files
 
-# rule :
-#     input:
-#     params:
-#     output:   
-#     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
-#     shell:
-#         """
-#         """
+rule merge_count_tables:
+        input:
+            bedgraph_inputs
+        output:
+            merged="results/merged/{sample}_counts.txt",
+            rse_counts="results/rse/{sample}_rse.rds"
+        params:
+            sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
+            counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
+            counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index)),
+            samples_table=config["samples_table"],
+            RT_windows=config["RT_windows"]
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "workflow/envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
+        shell:
+            """
+            SAMPLES=( {params.sample_list} )
+            BEDGRAPHS=( {params.counts_bedgraphs_list} )
+            TEMP_COUNTS=( {params.counts_temp_list} )
+            mkdir results/temp_merge
+            for i in ${{!BEDGRAPHS[@]}}; do 
+                echo -e "\t\t\t${{SAMPLES[i]}}" > ${{TEMP_COUNTS[i]}}.header
+                cut -f4 ${{BEDGRAPHS[i]}} > ${{TEMP_COUNTS[i]}}.counts
+                cat ${{TEMP_COUNTS[i]}}.header ${{TEMP_COUNTS[i]}}.counts > ${{TEMP_COUNTS[i]}}
+                rm ${{TEMP_COUNTS[i]}}.header
+                rm ${{TEMP_COUNTS[i]}}.counts
+            done 
+            paste {params.counts_temp_list} > {output.merged}
+            rm -rf results/temp_merge/
+            Rscript workflow/scripts/MakeCountsRSE_ver01.R {output.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
+            """
 
+###################################################################
+##                     Process count tables                      ##
+###################################################################
 
-# cd
-# /Volumes/Sansam/hpc-nobackup/2020Oct18_FrazerTumor/filteredBams
-# for
-# filename
-# in
-# $(ls *filtered_FILTERED_counts.txt)
-# do
-# sed
-# "1s/^/
-# ${filename}
-# \n/"
-# ${filename}
-# >
-# $filename
-# .new
-# echo
-# Done
-# ${filename}
-# done
-# paste *.new > countsTable.txt
-# sed
-# 's/.sorted.marked.duplicates_filtered_FILTERED_counts.txt//g'
-# countsTable.txt > countsTable2.txt
-# sed
-# 's/RTWindows_danRer11_noAlts_ver01_//g'
-# countsTable2.txt > countsTable3.txt
-# mv countsTable3.txt countsTable.txt
+rule process_count_tables:
+        input:
+            rse_counts="results/rse/{sample}_rse.rds"
+        output:
+            rse_processed="results/processed_rse/{sample}_processed_rse.rds"
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "workflow/envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_process_count_tables.log"
+        shell:
+            """
+            Rscript workflow/scripts/CalculateQuotientsSmoothScale_ver01.R {input.rse_counts} {output.rse_processed}
+            """
 
+#################################################################
+##                       Make bedgraphs                        ##
+#################################################################
 
-
-
-
-
-
-# ##################################################################
-# ##                    Define input functions                    ##
-# ##################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-# # this was created after reading 
-# #  https://eriqande.github.io/eca-bioinf-handbook/managing-workflows-with-snakemake.html
-# #  https://www.biostars.org/p/335903/
-
-# # this imports the pandas package functionality in an object named pd
-# import pandas as pd
-
-# # this reads the CSV file and sets an index using the values in the "sample" column.
-# samples_table = pd.read_csv("config/samples.csv").set_index("sample", drop=False)
-
-# # fastq filename input function definition set to Python dictionary
-# def fq_dict_from_sample(wildcards):
-#   return {
-#     "fq1": samples_table.loc[wildcards.sample, "fastq1"],
-#     "fq2": samples_table.loc[wildcards.sample, "fastq2"]
-#   }
-
-# # this makes a new sample table with only the 'treatment' sample rows
-# samples_table2 = samples_table.loc[samples_table['sampleType'] == 'treatment']
-
-# # sample_type input function definition set to Python dictionary
-# def sample_type_dict_from_sample(wildcards):
-#   return {
-#     "treatment": 'results/aligned/' + samples_table2.loc[wildcards.sample, "sample"] + '.bam',
-#     "control": 'results/aligned/' + samples_table2.loc[wildcards.sample, "Control"] + '.bam'
-#   }
-
-# ##################################################################
-# ##                           rules                              ##
-# ##################################################################
-
-# # to run snakemake without explicitly requesting any output files on the command line, we must request output files in the first rule. Therefore we include this otherwise useless rule here  
-# rule all:
-#     input:
-#         expand("results/trimmed/{sample}_trimmed_R1.fastq.gz", sample = samples_table.index),
-#         expand("results/qc/fastqc/{sample}_R1_fastqc.html", sample = samples_table.index),
-#         expand("results/aligned/{sample}.bam", sample = samples_table.index),
-#         expand("results/sicer/{sample}-W" + str(config['sicer_windowSize']) + "-G" + str(config['sicer_gapSize']) + "-FDR" + str(config['sicer_fdr']) + "-island.bed", sample = samples_table2.index)
-
-# # run fastqc on fastq.gz files before trimming
-# rule fastqc_reads:
-#     input:
-#         unpack(fq_dict_from_sample)   # <--- we need to wrap our input function inside a special Snakemake function called unpack() which turns the dict into a collection of named inputs
-#     output:
-#         html1="results/qc/fastqc/{sample}_R1_fastqc.html",
-#         zip1="results/qc/fastqc/{sample}_R1_fastqc.zip",
-#         html2="results/qc/fastqc/{sample}_R2_fastqc.html",
-#         zip2="results/qc/fastqc/{sample}_R2_fastqc.zip"
-#     conda:
-#         "envs/qc_trim_align.yml"
-#     log: "results/logs/snakelogs/fastqc_reads.{sample}.log"
-#     shell:
-#         """
-#         fastqc {input.fq1}
-#         fastqc {input.fq2}
-#         dir=$(dirname {input.fq1})
-#         bsename=$(basename {input.fq1} .gz)
-#         bsename=$(basename ${{bsename}} .fastq)
-#         mv ${{dir}}/${{bsename}}_fastqc.html {output.html1}
-#         mv ${{dir}}/${{bsename}}_fastqc.zip {output.zip1}
-#         bsename=$(basename {input.fq2} .gz)
-#         bsename=$(basename ${{bsename}} .fastq)
-#         mv ${{dir}}/${{bsename}}_fastqc.html {output.html2}
-#         mv ${{dir}}/${{bsename}}_fastqc.zip {output.zip2}
-#         """
-
-# # trim reads
-# rule trim_reads_with_fastp:
-#     input:
-#         unpack(fq_dict_from_sample)   # <--- we need to wrap our input function inside a special Snakemake function called unpack() which turns the dict into a collection of named inputs
-#     output:
-#         trimmed1="results/trimmed/{sample}_trimmed_R1.fastq.gz",
-#         trimmed2="results/trimmed/{sample}_trimmed_R2.fastq.gz",
-#         fastp_report="results/qc/fastp_reports/{sample}.html",
-#         fastp_json="results/qc/fastp_reports/{sample}.json"
-#     conda:
-#         "envs/qc_trim_align.yml"
-#     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
-#     shell:
-#         """
-#         fastp -i {input.fq1} -I {input.fq2} -o {output.trimmed1} -O {output.trimmed2} -h {output.fastp_report} --json {output.fastp_json} -R "{wildcards.sample}" -w 8
-#         """
-
-# # align reads to genome
-# rule align_reads_with_bwamem:
-#     input:
-#         R1="results/trimmed/{sample}_trimmed_R1.fastq.gz",
-#         R2="results/trimmed/{sample}_trimmed_R2.fastq.gz"
-#     params:
-#         genome=config["bwa_genome"]
-#     output:
-#         bam="results/aligned/{sample}.bam",
-#         bai="results/aligned/{sample}.bam.bai"
-#     conda:
-#         "envs/qc_trim_align.yml"
-#     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
-#     shell:
-#         """
-#         bwa mem -M -t 12 {params.genome} {input.R1} {input.R2} | samtools sort -@ 12 > {output.bam}
-#         samtools index -@ 12 {output.bam} > {output.bai}
-#         """
-
-# # call peaks with sicer
-
-# rule call_peaks_with_sicer:
-#     input:
-#         unpack(sample_type_dict_from_sample)   # <--- we need to wrap our input function inside a special Snakemake function called unpack() which turns the dict into a collection of named inputs
-#     output:
-#         "results/sicer/{sample}-W" + str(config['sicer_windowSize']) + "-G" + str(config['sicer_gapSize']) + "-FDR" + str(config['sicer_fdr']) + "-island.bed"
-#     params:
-#         sicer_genome=config["sicer_genome"],
-#         sicer_windowSize=config["sicer_windowSize"],
-#         sicer_fragmentSize=config["sicer_fragmentSize"],
-#         sicer_fdr=config["sicer_fdr"],
-#         sicer_gapSize=config["sicer_gapSize"]
-#     conda:
-#         "envs/qc_trim_align.yml"
-#     log: "results/logs/snakelogs/call_peaks_with_sicer.{sample}-W" + str(config['sicer_windowSize']) + "-G" + str(config['sicer_gapSize']) + "-FDR" + str(config['sicer_fdr']) + ".log"
-#     shell:
-#         """
-#         sicer -t {input.treatment} -c {input.control} -s {params.sicer_genome} -w {params.sicer_windowSize} -f {params.sicer_fragmentSize} -fdr {params.sicer_fdr} -o results/sicer/ -g {params.sicer_gapSize} -cpu 12
-#         """
+rule make_bedgraphs:
+        input:
+            rse_processed="results/processed_rse/{sample}_processed_rse.rds"
+        output:
+            Log2Ratios_bedgraphs="results/bedgraphs/{sample}_Log2Ratios_bedgraphs.gz",
+            ZScores_bedgraphs="results/bedgraphs/{sample}_ZScores_bedgraphs.gz",
+            Smoothed_bedgraphs="results/bedgraphs/{sample}_Smoothed_bedgraphs.gz",
+            Quotients_bedgraphs="results/bedgraphs/{sample}_Quotients_bedgraphs.gz"
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "workflow/envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_make_bedgraphs.log"
+        shell:
+            """
+            mkdir Log2Ratios
+            mkdir ZScores
+            mkdir Smoothed
+            mkdir Quotients
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Log2Ratios"
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "ZScores"
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Smoothed"
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Quotients"
+            tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
+            tar -czvf {output.ZScores_bedgraphs} ZScores/
+            tar -czvf {output.Smoothed_bedgraphs} Smoothed/
+            tar -czvf {output.Quotients_bedgraphs} Quotients/
+            rm -rf Log2Ratios
+            rm -rf ZScores
+            rm -rf Smoothed
+            rm -rf Quotients
+            """
