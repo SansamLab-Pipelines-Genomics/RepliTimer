@@ -48,7 +48,7 @@ rule trim_reads_with_fastp:
     envmodules:
         "fastp/0.23.2"
     conda:
-        "workflow/envs/RTEnv.yml"
+        "envs/RTEnv.yml"
     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
     shell:
         """
@@ -73,7 +73,7 @@ rule align_reads_with_bwamem:
         "bwa/0.7.15",
         "samtools/1.14"
     conda:
-        "workflow/envs/RTEnv.yml"
+        "envs/RTEnv.yml"
     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
     shell:
         """
@@ -98,7 +98,7 @@ rule mark_duplicates_with_picard:
         "samtools/1.14",
         "picard/2.21.2"
     conda:
-        "workflow/envs/RTEnv.yml"
+        "envs/RTEnv.yml"
     log: "results/logs/snakelogs/mark_duplicates_with_picard.{sample}.log"
     shell:
         """
@@ -124,7 +124,7 @@ rule quality_filter_with_bamtools:
         "samtools/1.14",
         "bamtools/2.5.1"
     conda:
-        "workflow/envs/RTEnv.yml"
+        "envs/RTEnv.yml"
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
     shell:
         """
@@ -148,7 +148,7 @@ rule blacklist_filter_with_bedtools:
         "samtools/1.14",
         "bedtools/2.30.0"
     conda:
-        "workflow/envs/RTEnv.yml"
+        "envs/RTEnv.yml"
     log: "results/logs/snakelogs/blacklist_filter_with_bedtools.{sample}.log"
     shell:
         """
@@ -173,7 +173,7 @@ rule count_reads_in_RT_windows:
         "R/4.1.2-mkl",
         "bioconductor/3.14"
     conda:
-        "workflow/envs/RTEnv.yml"
+        "envs/RTEnv.yml"
     log: "results/logs/snakelogs/count_reads_in_RT_windows.{sample}.log"
     shell:
         """
@@ -204,7 +204,7 @@ rule merge_count_tables:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
         conda:
-            "workflow/envs/RTEnv_R.yml"
+            "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         shell:
             """
@@ -237,7 +237,7 @@ rule process_count_tables:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
         conda:
-            "workflow/envs/RTEnv_R.yml"
+            "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_process_count_tables.log"
         shell:
             """
@@ -260,7 +260,7 @@ rule make_bedgraphs:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
         conda:
-            "workflow/envs/RTEnv_R.yml"
+            "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_make_bedgraphs.log"
         shell:
             """
