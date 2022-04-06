@@ -170,7 +170,7 @@ rule count_reads_in_RT_windows:
     output:
         counts="results/counts/{sample}_counts.bedgraph"
     envmodules:
-        "R/3.6.0",
+        "R/4.1.2-mkl",
         "bioconductor/3.14"
     conda:
         "workflow/envs/RTEnv.yml"
@@ -201,8 +201,10 @@ rule merge_count_tables:
             samples_table=config["samples_table"],
             RT_windows=config["RT_windows"]
         envmodules:
-            "R/3.6.0",
+            "R/4.1.2-mkl",
             "bioconductor/3.14"
+        conda:
+            "workflow/envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         shell:
             """
@@ -232,8 +234,10 @@ rule process_count_tables:
         output:
             rse_processed="results/processed_rse/{sample}_processed_rse.rds"
         envmodules:
-            "R/3.6.0",
+            "R/4.1.2-mkl",
             "bioconductor/3.14"
+        conda:
+            "workflow/envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_process_count_tables.log"
         shell:
             """
@@ -253,8 +257,10 @@ rule make_bedgraphs:
             Smoothed_bedgraphs="results/bedgraphs/{sample}_Smoothed_bedgraphs.gz",
             Quotients_bedgraphs="results/bedgraphs/{sample}_Quotients_bedgraphs.gz"
         envmodules:
-            "R/3.6.0",
+            "R/4.1.2-mkl",
             "bioconductor/3.14"
+        conda:
+            "workflow/envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_make_bedgraphs.log"
         shell:
             """
@@ -270,4 +276,8 @@ rule make_bedgraphs:
             tar -czvf {output.ZScores_bedgraphs} ZScores/
             tar -czvf {output.Smoothed_bedgraphs} Smoothed/
             tar -czvf {output.Quotients_bedgraphs} Quotients/
+            rm -rf Log2Ratios
+            rm -rf ZScores
+            rm -rf Smoothed
+            rm -rf Quotients
             """

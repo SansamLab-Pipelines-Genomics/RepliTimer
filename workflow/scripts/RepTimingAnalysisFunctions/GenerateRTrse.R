@@ -23,16 +23,16 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
     Quotients_se <- Quotients_se[complete.cases(SummarizedExperiment::assay(Quotients_se,withDimnames=FALSE)),]
   # calculate Smoothed Quotients
     if(isTRUE(AllowGaps)){
-      QuotientsSmoothed_se <- SmoothRseAssay(Quotients_se)
+      QuotientsSmoothed_se <- SummarizedExperiment::sort(SmoothRseAssay(Quotients_se))
     }else{
-      QuotientsSmoothed_se <- SmoothRseAssayToGaps(Quotients_se)
+      QuotientsSmoothed_se <- SummarizedExperiment::sort(SmoothRseAssayToGaps(Quotients_se))
     }
   # calculate Smoothed Quotient Z Scores
-    QuotientsSmoothedScaled_se <- ZScoreRseAssay(QuotientsSmoothed_se)
+    QuotientsSmoothedScaled_se <- SummarizedExperiment::sort(ZScoreRseAssay(QuotientsSmoothed_se))
   # calculate Log2 of Smoothed Quotients
-    QuotientsSmoothedLog2_se <- Log2RseAssay(QuotientsSmoothed_se)
+    QuotientsSmoothedLog2_se <- SummarizedExperiment::sort(Log2RseAssay(QuotientsSmoothed_se))
   # rebuild rse with all values in assays
-    rse <- QuotientsSmoothedScaled_se
+    rse <- SummarizedExperiment::sort(QuotientsSmoothedScaled_se)
     SummarizedExperiment::assay(rse,withDimnames=FALSE) <- NULL
     SummarizedExperiment::assays(rse,withDimnames=FALSE)$Log2Ratios <- SummarizedExperiment::assay(QuotientsSmoothedLog2_se,withDimnames=FALSE)
     SummarizedExperiment::assays(rse,withDimnames=FALSE)$ZScores <- SummarizedExperiment::assay(QuotientsSmoothedScaled_se,withDimnames=FALSE)
@@ -49,17 +49,18 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
     MedianQuotients_se <- SummarizedExperiment::sort(MedianQuotients_se)
     ##
     if(isTRUE(AllowGaps)){
-      MedianQuotientsSmoothed_se <- SmoothRseAssay(MedianQuotients_se)
+      MedianQuotientsSmoothed_se <- SummarizedExperiment::sort(SmoothRseAssay(MedianQuotients_se))
     }else{
-      MedianQuotientsSmoothed_se <- SmoothRseAssay(MedianQuotients_se)
+      MedianQuotientsSmoothed_se <- SummarizedExperiment::sort(SmoothRseAssay(MedianQuotients_se))
     }
     ##
-    MedianQuotientsSmoothedLog2_se <- Log2RseAssay(MedianQuotientsSmoothed_se)
-    MedianQuotientsSmoothedScaled_se <- ZScoreRseAssay(MedianQuotientsSmoothed_se)
+    MedianQuotientsSmoothedLog2_se <- SummarizedExperiment::sort(Log2RseAssay(MedianQuotientsSmoothed_se))
+    MedianQuotientsSmoothedScaled_se <- SummarizedExperiment::sort(ZScoreRseAssay(MedianQuotientsSmoothed_se))
     rse2 <- MedianQuotientsSmoothedScaled_se
     rse3 <- SummarizedExperiment::SummarizedExperiment(colData = rbind(SummarizedExperiment::colData(rse2),
                                                                        SummarizedExperiment::colData(rse)),
-                                                       rowRanges = SummarizedExperiment::rowRanges(rse))
+                                                       rowRanges = SummarizedExperiment::rowRanges(QuotientsSmoothedLog2_se))
+
     Log2Ratios <- cbind(SummarizedExperiment::assay(MedianQuotientsSmoothedLog2_se,withDimnames=FALSE),
                      SummarizedExperiment::assay(QuotientsSmoothedLog2_se,withDimnames=FALSE))
     ZScores <- cbind(SummarizedExperiment::assay(MedianQuotientsSmoothedScaled_se,withDimnames=FALSE),
