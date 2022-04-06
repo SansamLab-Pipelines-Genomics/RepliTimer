@@ -128,6 +128,7 @@ Note. The commands to do this will be different on your machine. These commands 
 ml slurm
 ml miniconda
 ml pandas
+ml numpy
 ```
 ### 2.  Clone repository
 ```bash
