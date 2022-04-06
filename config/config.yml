@@ -1,5 +1,5 @@
 experiment_name: "test"
-samples_table: "config/rif1Samples.csv"
+samples_table: "config/testSamples.csv"
 fastp_cpus: 6
 bwa_cpus: 12
 picard_memory: "8G"

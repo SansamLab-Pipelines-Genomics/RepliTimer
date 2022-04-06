@@ -1,3 +1,5 @@
-sample,fastq1,fastq2,sampleType,Control
-testSample,resources/test_R1.fastq.gz,resources/test_R2.fastq.gz,treatment,testInput
-testInput,resources/test2_R1.fastq.gz,resources/test2_R2.fastq.gz,control,NA
+sample,fastq1,fastq2,Type,set,Replicate_ID
+testSample,resources/test_R1.fastq.gz,resources/test_R2.fastq.gz,S,1,test
+testInput,resources/test2_R1.fastq.gz,resources/test2_R2.fastq.gz,G1,1,NA
+testSample2,resources/test_R1.fastq.gz,resources/test_R2.fastq.gz,S,2,test
+testInput2,resources/test2_R1.fastq.gz,resources/test2_R2.fastq.gz,G1,2,NA
