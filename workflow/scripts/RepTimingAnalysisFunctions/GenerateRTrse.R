@@ -21,6 +21,8 @@ GenerateRTrse <- function(RTse,AllowGaps=TRUE){
     Quotients_se_list <- Generate_S_G1_Quotients(onlySsamples, G1samplesMedians)
     Quotients_se <- Flatten_SE_list(Quotients_se_list)
     Quotients_se <- Quotients_se[complete.cases(SummarizedExperiment::assay(Quotients_se,withDimnames=FALSE)),]
+    Quotients_df <- as.data.frame(SummarizedExperiment::assay(Quotients_se,withDimnames=FALSE))
+    Quotients_se <- Quotients_se[!is.infinite(rowSums(Quotients_df)),]
   # calculate Smoothed Quotients
     if(isTRUE(AllowGaps)){
       QuotientsSmoothed_se <- SummarizedExperiment::sort(SmoothRseAssay(Quotients_se))
