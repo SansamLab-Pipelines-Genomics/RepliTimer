@@ -118,6 +118,61 @@ Rscript \
     {input.doubleFiltered_bam} \
     {output.counts}          
 ```
+### 7.  Merge count tables
+```bash
+SAMPLES=( {params.sample_list} )
+BEDGRAPHS=( {params.counts_bedgraphs_list} )
+TEMP_COUNTS=( {params.counts_temp_list} )
+mkdir results/temp_merge
+for i in ${{!BEDGRAPHS[@]}}; do 
+ echo -e "\t\t\t${{SAMPLES[i]}}" > ${{TEMP_COUNTS[i]}}.header
+ cut -f4 ${{BEDGRAPHS[i]}} > ${{TEMP_COUNTS[i]}}.counts
+ cat ${{TEMP_COUNTS[i]}}.header ${{TEMP_COUNTS[i]}}.counts > ${{TEMP_COUNTS[i]}}
+ rm ${{TEMP_COUNTS[i]}}.header
+ rm ${{TEMP_COUNTS[i]}}.counts
+done 
+paste {params.counts_temp_list} > {output.merged}
+rm -rf results/temp_merge/
+Rscript workflow/scripts/MakeCountsRSE_ver01.R \
+  {output.merged} \
+  {params.samples_table} \
+  {params.RT_windows} \
+  {output.rse_counts}
+```
+### 8.  Process count tables
+```bash
+Rscript workflow/scripts/CalculateQuotientsSmoothScale_ver01.R \
+  {input.rse_counts} \
+  {output.rse_processed}
+```
+
+### 9.  Make bedgraphs
+```bash
+mkdir Log2Ratios
+mkdir ZScores
+mkdir Smoothed
+mkdir Quotients
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "Log2Ratios"
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "ZScores"
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "Smoothed"
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "Quotients"
+tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
+tar -czvf {output.ZScores_bedgraphs} ZScores/
+tar -czvf {output.Smoothed_bedgraphs} Smoothed/
+tar -czvf {output.Quotients_bedgraphs} Quotients/
+rm -rf Log2Ratios
+rm -rf ZScores
+rm -rf Smoothed
+rm -rf Quotients
+```
 
 ## Step-by-step instructions on running Snakemake pipeline:
 
