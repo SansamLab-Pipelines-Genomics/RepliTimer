@@ -127,6 +127,7 @@ Note. The commands to do this will be different on your machine. These commands 
 ```bash
 ml slurm
 ml miniconda
+ml python
 ml pandas
 ml numpy
 ```
