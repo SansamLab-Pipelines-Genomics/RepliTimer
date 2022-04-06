@@ -247,7 +247,7 @@ sbatch \
 ```
 
 #### 7B. Use environment modules.
-Rather than using conda environments, you may prefer to use modules installed on your computing cluster. These modules are defined for each rule in workflow/Snakefile this must be customized for your environment, so you must modify the Snakefile yourself.
+Rather than using conda environments, you may prefer to use modules installed on your computing cluster. These modules are defined for each rule in 'workflow/Snakefile'. This must be customized for your environment, and you must modify the Snakefile yourself.
 
 To execute the pipeline with environment modules, enter the following:
 ```bash
