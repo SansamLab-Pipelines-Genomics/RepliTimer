@@ -81,7 +81,7 @@ sbatch \
 --output {cluster.output}'"
 ```
 
-### 5A. Run pipeline with installed modules (Alternative 2)
+### 5B. Run pipeline with installed modules (Alternative 2)
 #### Modify Snakefile with modules installed on your hpc
 Each rule in the workflow/Snakefile file has modules listed. These should be changed to match the names of the modules on your hpc. For example:
 ![rule change example](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/ruleChangeExample.png)
@@ -104,4 +104,152 @@ sbatch \
 --cpus-per-task {cluster.cpus-per-task}  \
 --mem {cluster.mem} \
 --output {cluster.output}'"
+```
+### 6.  Check output in the results/ directory
+Use the tree program to list all of the files with sizes.
+```bash
+tree -hF results
+```
+
+You should get an output like this:
+```
+results
+├── [   0]  aligned/
+│   ├── [ 21M]  testInput.bam
+│   ├── [1.9M]  testInput.bam.bai
+│   ├── [ 21M]  testInput2.bam
+│   ├── [1.9M]  testInput2.bam.bai
+│   ├── [ 21M]  testSample.bam
+│   ├── [1.9M]  testSample.bam.bai
+│   ├── [ 21M]  testSample2.bam
+│   └── [1.9M]  testSample2.bam.bai
+├── [   0]  bedgraphs/
+│   ├── [5.6M]  test_Log2Ratios_bedgraphs.gz
+│   ├── [2.2M]  test_Quotients_bedgraphs.gz
+│   ├── [5.3M]  test_Smoothed_bedgraphs.gz
+│   └── [6.3M]  test_ZScores_bedgraphs.gz
+├── [   0]  counts/
+│   ├── [2.9M]  testInput2_counts.bedgraph
+│   ├── [2.9M]  testInput_counts.bedgraph
+│   ├── [2.9M]  testSample2_counts.bedgraph
+│   └── [2.9M]  testSample_counts.bedgraph
+├── [   0]  doubleFilteredBams/
+│   ├── [ 17M]  testInput.bam
+│   ├── [1.7M]  testInput.bam.bai
+│   ├── [ 17M]  testInput2.bam
+│   ├── [1.7M]  testInput2.bam.bai
+│   ├── [ 17M]  testSample.bam
+│   ├── [1.7M]  testSample.bam.bai
+│   ├── [ 17M]  testSample2.bam
+│   └── [1.7M]  testSample2.bam.bai
+├── [   0]  duplicatesMarkedBam/
+│   ├── [2.0M]  testInput.bai
+│   ├── [ 21M]  testInput.bam
+│   ├── [1.9M]  testInput.bam.bai
+│   ├── [2.0M]  testInput2.bai
+│   ├── [ 21M]  testInput2.bam
+│   ├── [1.9M]  testInput2.bam.bai
+│   ├── [2.0M]  testSample.bai
+│   ├── [ 21M]  testSample.bam
+│   ├── [1.9M]  testSample.bam.bai
+│   ├── [2.0M]  testSample2.bai
+│   ├── [ 21M]  testSample2.bam
+│   └── [1.9M]  testSample2.bam.bai
+├── [   0]  filteredBams/
+│   ├── [ 18M]  testInput.bam
+│   ├── [1.7M]  testInput.bam.bai
+│   ├── [ 18M]  testInput2.bam
+│   ├── [1.7M]  testInput2.bam.bai
+│   ├── [ 17M]  testSample.bam
+│   ├── [1.7M]  testSample.bam.bai
+│   ├── [ 17M]  testSample2.bam
+│   └── [1.7M]  testSample2.bam.bai
+├── [   0]  logs/
+│   ├── [2.1K]  align_reads_with_bwamem.testInput.log
+│   ├── [2.1K]  align_reads_with_bwamem.testInput2.log
+│   ├── [2.1K]  align_reads_with_bwamem.testSample.log
+│   ├── [2.1K]  align_reads_with_bwamem.testSample2.log
+│   ├── [ 661]  blacklist_filter_with_bedtools.testInput.log
+│   ├── [ 665]  blacklist_filter_with_bedtools.testInput2.log
+│   ├── [ 665]  blacklist_filter_with_bedtools.testSample.log
+│   ├── [ 669]  blacklist_filter_with_bedtools.testSample2.log
+│   ├── [1.5K]  count_reads_in_RT_windows.testInput.log
+│   ├── [1.5K]  count_reads_in_RT_windows.testInput2.log
+│   ├── [1.6K]  count_reads_in_RT_windows.testSample.log
+│   ├── [1.6K]  count_reads_in_RT_windows.testSample2.log
+│   ├── [ 26K]  make_bedgraphs.test.log
+│   ├── [4.8K]  mark_duplicates_with_picard.testInput.log
+│   ├── [4.8K]  mark_duplicates_with_picard.testInput2.log
+│   ├── [4.8K]  mark_duplicates_with_picard.testSample.log
+│   ├── [4.8K]  mark_duplicates_with_picard.testSample2.log
+│   ├── [3.4K]  merge_count_tables.test.log
+│   ├── [   0]  picard_metrics/
+│   │   ├── [3.5K]  testInput.marked.duplicates_metrics.txt
+│   │   ├── [3.5K]  testInput2.marked.duplicates_metrics.txt
+│   │   ├── [3.5K]  testSample.marked.duplicates_metrics.txt
+│   │   └── [3.5K]  testSample2.marked.duplicates_metrics.txt
+│   ├── [6.9K]  process_count_tables.test.log
+│   ├── [ 658]  quality_filter_with_bamtools.testInput.log
+│   ├── [ 662]  quality_filter_with_bamtools.testInput2.log
+│   ├── [ 662]  quality_filter_with_bamtools.testSample.log
+│   ├── [ 666]  quality_filter_with_bamtools.testSample2.log
+│   ├── [   0]  snakelogs/
+│   │   ├── [   0]  align_reads_with_bwamem.testInput.log
+│   │   ├── [   0]  align_reads_with_bwamem.testInput2.log
+│   │   ├── [   0]  align_reads_with_bwamem.testSample.log
+│   │   ├── [   0]  align_reads_with_bwamem.testSample2.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.testInput.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.testInput2.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.testSample.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.testSample2.log
+│   │   ├── [   0]  count_reads_in_RT_windows.testInput.log
+│   │   ├── [   0]  count_reads_in_RT_windows.testInput2.log
+│   │   ├── [   0]  count_reads_in_RT_windows.testSample.log
+│   │   ├── [   0]  count_reads_in_RT_windows.testSample2.log
+│   │   ├── [   0]  mark_duplicates_with_picard.testInput.log
+│   │   ├── [   0]  mark_duplicates_with_picard.testInput2.log
+│   │   ├── [   0]  mark_duplicates_with_picard.testSample.log
+│   │   ├── [   0]  mark_duplicates_with_picard.testSample2.log
+│   │   ├── [   0]  quality_filter_with_bamtools.testInput.log
+│   │   ├── [   0]  quality_filter_with_bamtools.testInput2.log
+│   │   ├── [   0]  quality_filter_with_bamtools.testSample.log
+│   │   ├── [   0]  quality_filter_with_bamtools.testSample2.log
+│   │   ├── [   0]  test_make_bedgraphs.log
+│   │   ├── [   0]  test_merge_count_tables.log
+│   │   ├── [   0]  test_process_count_tables.log
+│   │   ├── [   0]  trim_reads_with_fastp.testInput.log
+│   │   ├── [   0]  trim_reads_with_fastp.testInput2.log
+│   │   ├── [   0]  trim_reads_with_fastp.testSample.log
+│   │   └── [   0]  trim_reads_with_fastp.testSample2.log
+│   ├── [1.9K]  trim_reads_with_fastp.testInput.log
+│   ├── [2.0K]  trim_reads_with_fastp.testInput2.log
+│   ├── [2.0K]  trim_reads_with_fastp.testSample.log
+│   └── [2.0K]  trim_reads_with_fastp.testSample2.log
+├── [   0]  merged/
+│   └── [941K]  test_counts.txt
+├── [   0]  processed_rse/
+│   └── [8.9M]  test_processed_rse.rds
+├── [   0]  qc/
+│   └── [   0]  fastp_reports/
+│       ├── [467K]  testInput.html
+│       ├── [122K]  testInput.json
+│       ├── [467K]  testInput2.html
+│       ├── [122K]  testInput2.json
+│       ├── [467K]  testSample.html
+│       ├── [121K]  testSample.json
+│       ├── [467K]  testSample2.html
+│       └── [121K]  testSample2.json
+├── [   0]  rse/
+│   └── [356K]  test_rse.rds
+└── [   0]  trimmed/
+    ├── [7.8M]  testInput2_trimmed_R1.fastq.gz
+    ├── [8.5M]  testInput2_trimmed_R2.fastq.gz
+    ├── [7.8M]  testInput_trimmed_R1.fastq.gz
+    ├── [8.5M]  testInput_trimmed_R2.fastq.gz
+    ├── [7.8M]  testSample2_trimmed_R1.fastq.gz
+    ├── [8.5M]  testSample2_trimmed_R2.fastq.gz
+    ├── [7.8M]  testSample_trimmed_R1.fastq.gz
+    └── [8.5M]  testSample_trimmed_R2.fastq.gz
+
+15 directories, 121 files
 ```
