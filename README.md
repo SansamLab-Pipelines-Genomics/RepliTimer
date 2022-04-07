@@ -15,6 +15,8 @@ Process_RepTiming_Snakemake describes how to process short whole-genome sequenin
 
 ## Table of contents:
 * [Examples](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#examples)
+  * [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
+  * [Run Snakemake pipeline with Siefert, 2017 data.]()
 * [Requirements](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#requirements)
 * [Description of individual steps in pipeline](https://github.com/SansamLab/Process_HiC_SnakeMake/edit/main/README.md#description-of-individual-steps-in-pipeline)
   * [1.  trim_reads_with_fastp](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--trim_reads_with_fastp)
