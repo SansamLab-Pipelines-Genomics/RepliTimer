@@ -38,6 +38,8 @@ conda activate SnakemakeEnv/
 ```
 
 ### 4. Modify the job-specific configuration files.
+![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/configFileImage.png)
+
 
 #### 4A. Modify the config/config.yml file
 The config.yml file should be preconfigured for the test data set. Check it to be sure:
