@@ -41,11 +41,11 @@ conda activate SnakemakeEnv/
 
 #### 4A. Modify the config/config.yml file
 The config.yml file should be preconfigured for the test data set. Check it to be sure:
-![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/configFileImage.png)
+![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/configFileImage.png)
 
 #### 4B. Modify the config/samples.csv file
 The testSamples.csv file in the config folder has paths to the test fastq files.
-![Sample Table Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/sampleTableImage.png)
+![Sample Table Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/sampleTableImage.png)
 
 ### 5A. Run pipeline with conda environments (Alternative 1)
 #### Install necessary conda environments
@@ -84,7 +84,7 @@ sbatch \
 ### 5B. Run pipeline with installed modules (Alternative 2)
 #### Modify Snakefile with modules installed on your hpc
 Each rule in the workflow/Snakefile file has modules listed. These should be changed to match the names of the modules on your hpc. For example:
-![rule change example](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/ruleChangeExample.png)
+![rule change example](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/ruleChangeExample.png)
 
 #### Run pipeline with modules installed on hpc
 While within the root directory of the repository clone, enter the following command.
