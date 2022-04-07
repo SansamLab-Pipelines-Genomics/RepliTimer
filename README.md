@@ -1,4 +1,12 @@
-(/github/release/babel/babel)
+![Release](https://img.shields.io/github/v/release/SansamLab/Process_RepTiming_Snakemake?include_prereleases)
+![ReleaseDate](https://img.shields.io/github/release-date-pre/SansamLab/Process_RepTiming_Snakemake?include_prereleases)
+![Size](https://img.shields.io/github/repo-size/SansamLab/Process_RepTiming_Snakemake)
+![License](https://img.shields.io/github/license/SansamLab/Process_RepTiming_Snakemake)
+![LastCommit](https://img.shields.io/github/last-commit/SansamLab/Process_RepTiming_Snakemake)
+![Downloads](https://img.shields.io/github/downloads/SansamLab/Process_RepTiming_Snakemake/total)
+![OpenIssues](https://img.shields.io/github/issues-raw/SansamLab/Process_RepTiming_Snakemake)
+
+
 # Process_RepTiming_Snakemake
 
 ## Project Description:
