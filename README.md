@@ -10,6 +10,9 @@
   * [4.  quality_filter_with_bamtools](https://github.com/SansamLab/Process_RepTiming_Snakemake#4--quality_filter_with_bamtools)
   * [5.  blacklist_filter_with_bedtools](https://github.com/SansamLab/Process_RepTiming_Snakemake#5--blacklist_filter_with_bedtools)
   * [6.  count_reads_in_RT_windows](https://github.com/SansamLab/Process_RepTiming_Snakemake#6--count_reads_in_rt_windows)
+  * [7.  Merge count tables](https://github.com/SansamLab/Process_RepTiming_Snakemake#7--merge-count-tables)
+  * [8.  Process count tables](https://github.com/SansamLab/Process_RepTiming_Snakemake#8--process-count-tables)
+  * [9.  Make bedgraphs](https://github.com/SansamLab/Process_RepTiming_Snakemake#9--make-bedgraphs)
 * [Step-by-step instructions on running Snakemake pipeline:](https://github.com/SansamLab/Process_RepTiming_Snakemake#step-by-step-instructions-on-running-snakemake-pipeline)
   * [1.  Load slurm and miniconda](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--load-slurm-and-miniconda)
   * [2.  Clone repository](https://github.com/SansamLab/Process_RepTiming_Snakemake#2--clone-repository)
@@ -118,6 +121,61 @@ Rscript \
     {input.doubleFiltered_bam} \
     {output.counts}          
 ```
+### 7.  Merge count tables
+```bash
+SAMPLES=( {params.sample_list} )
+BEDGRAPHS=( {params.counts_bedgraphs_list} )
+TEMP_COUNTS=( {params.counts_temp_list} )
+mkdir results/temp_merge
+for i in ${{!BEDGRAPHS[@]}}; do 
+ echo -e "\t\t\t${{SAMPLES[i]}}" > ${{TEMP_COUNTS[i]}}.header
+ cut -f4 ${{BEDGRAPHS[i]}} > ${{TEMP_COUNTS[i]}}.counts
+ cat ${{TEMP_COUNTS[i]}}.header ${{TEMP_COUNTS[i]}}.counts > ${{TEMP_COUNTS[i]}}
+ rm ${{TEMP_COUNTS[i]}}.header
+ rm ${{TEMP_COUNTS[i]}}.counts
+done 
+paste {params.counts_temp_list} > {output.merged}
+rm -rf results/temp_merge/
+Rscript workflow/scripts/MakeCountsRSE_ver01.R \
+  {output.merged} \
+  {params.samples_table} \
+  {params.RT_windows} \
+  {output.rse_counts}
+```
+### 8.  Process count tables
+```bash
+Rscript workflow/scripts/CalculateQuotientsSmoothScale_ver01.R \
+  {input.rse_counts} \
+  {output.rse_processed}
+```
+
+### 9.  Make bedgraphs
+```bash
+mkdir Log2Ratios
+mkdir ZScores
+mkdir Smoothed
+mkdir Quotients
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "Log2Ratios"
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "ZScores"
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "Smoothed"
+Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R \
+  {input.rse_processed} \
+  "Quotients"
+tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
+tar -czvf {output.ZScores_bedgraphs} ZScores/
+tar -czvf {output.Smoothed_bedgraphs} Smoothed/
+tar -czvf {output.Quotients_bedgraphs} Quotients/
+rm -rf Log2Ratios
+rm -rf ZScores
+rm -rf Smoothed
+rm -rf Quotients
+```
 
 ## Step-by-step instructions on running Snakemake pipeline:
 
@@ -137,7 +195,7 @@ mv Process_RepTiming_Snakemake/ My_RT_Project_Folder/
 cd My_RT_Project_Folder
 ```
 ### 3.  Start the conda environment
-### 3A.  FIRST TIME ONLY:  Setup conda environment
+### 3A.  FIRST TIME ONLY:  Setup conda environment with snakemake
 ```bash
 # -f is the location of the environment .yml file. 
 ## The relative path assumes that you are in the root directory of this repository.
@@ -145,7 +203,7 @@ cd My_RT_Project_Folder
 conda env create -f workflow/envs/SnakemakeEnv.yml -p /s/sansam-lab/SnakemakeEnv 
 ```
 
-### 3B.  Activate conda environment
+### 3B.  Activate conda environment with snakemake
 ```bash
 conda activate /s/sansam-lab/SnakemakeEnv
 ```
@@ -210,7 +268,7 @@ snakemake --dag | dot -Tpdf > dag.pdf
 This snakemake pipeline could be executed without slurm, but if an hpc with slurm is used, the following will start the pipeline with the parameters defined in the config/cluster_config.yml file.
 
 #### 7A. Use conda environments
-If conda is to be used for rule-specific environments, you may find it useful to create the environments first. The '--conda-prefix' option is used to set a directory in which the ‘conda’ and ‘conda-archive’ directories are created. This directory may be changed to a stable or shared location.
+If conda is to be used for rule-specific environments, you may find it useful to create the environments first. Running 'snakemake' with the '--conda-create-envs-only' option will create the environments without running the pipeline. The '--conda-prefix' option is used to set a directory in which the ‘conda’ and ‘conda-archive’ directories are created. This directory may be changed to a stable or shared location.
 ```bash
 sbatch --mem 32G \
 --wrap="\
@@ -222,7 +280,7 @@ snakemake \
 --conda-frontend conda"
 ```
 
-To execute pipeline with conda environments:
+Once the environments are setup, you may execute pipeline with conda environments using the following command:
 ```bash
 sbatch --constraint=westmere \
 --wrap="\
