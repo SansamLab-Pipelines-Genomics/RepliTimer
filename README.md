@@ -5,6 +5,7 @@
 Process_RepTiming_Snakemake describes how to process short whole-genome sequening reads from G1 and S phase cells into replication timing values. Each of the individual data processing steps are described, which enables step-by-step processing to be done. Alternatively, a Snakemake pipeline with clearly defined dependencies and Anaconda environments is also provided so that the data processing pipeline can be automated.
 
 ## Table of contents:
+* [Requirements](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#requirements)
 * [Description of individual steps in pipeline](https://github.com/SansamLab/Process_HiC_SnakeMake/edit/main/README.md#description-of-individual-steps-in-pipeline)
   * [1.  trim_reads_with_fastp](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--trim_reads_with_fastp)
   * [2.  align_reads_with_bwamem](https://github.com/SansamLab/Process_RepTiming_Snakemake#2--run_bwa_mem)
@@ -28,7 +29,9 @@ Process_RepTiming_Snakemake describes how to process short whole-genome sequenin
   * [5.  Do a dry run](https://github.com/SansamLab/Process_RepTiming_Snakemake#5--do-a-dry-run)
   * [6.  Make a DAG diagram](https://github.com/SansamLab/Process_RepTiming_Snakemake#6--make-a-dag-diagram)
   * [7.  Run on cluster with slurm](https://github.com/SansamLab/Process_RepTiming_Snakemake#7--run-on-cluster-with-slurm)
-* [Output structure]()
+    * [7A.  Use conda environments](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#7a-use-conda-environments)
+    * [7B.  Use modules](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#7b-use-environment-modules)
+* [Output structure](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#output-structure)
 * [References](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#references)
 
 ## Requirements
@@ -424,7 +427,9 @@ Martin Morgan, Valerie Obenchain, Jim Hester and Hervé Pagès (2021). Summarize
 
 ### GenomicRanges
 
-Lawrence M, Huber W, Pag\`es H, Aboyoun P, Carlson M, et al. (2013) Software for Computing and Annotating Genomic Ranges. PLoS Comput Biol 9(8): e1003118. doi:10.1371/journal.pcbi.1003118### matrixstats
+Lawrence M, Huber W, Pag\`es H, Aboyoun P, Carlson M, et al. (2013) Software for Computing and Annotating Genomic Ranges. PLoS Comput Biol 9(8): e1003118. doi:10.1371/journal.pcbi.1003118
+
+### matrixstats
 
 Henrik Bengtsson (2021). matrixStats: Functions that Apply to Rows and Columns of Matrices (and to Vectors). R package version 0.61.0. https://CRAN.R-project.org/package=matrixStats
 
