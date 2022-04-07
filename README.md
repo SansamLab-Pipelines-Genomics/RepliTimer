@@ -14,9 +14,6 @@
 Process_RepTiming_Snakemake describes how to process short whole-genome sequening reads from G1 and S phase cells into replication timing values. Each of the individual data processing steps are described, which enables step-by-step processing to be done. Alternatively, a Snakemake pipeline with clearly defined dependencies and Anaconda environments is also provided so that the data processing pipeline can be automated.
 
 ## Table of contents:
-* [Examples](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#examples)
-  * [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
-  * [Run Snakemake pipeline with Siefert, 2017 data.]()
 * [Requirements](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#requirements)
 * [Description of individual steps in pipeline](https://github.com/SansamLab/Process_HiC_SnakeMake/edit/main/README.md#description-of-individual-steps-in-pipeline)
   * [1.  trim_reads_with_fastp](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--trim_reads_with_fastp)
@@ -44,10 +41,10 @@ Process_RepTiming_Snakemake describes how to process short whole-genome sequenin
     * [7A.  Use conda environments](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#7a-use-conda-environments)
     * [7B.  Use modules](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#7b-use-environment-modules)
 * [Output structure](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#output-structure)
+* [Examples](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#examples)
+  * [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
+  * [Run Snakemake pipeline with Siefert, 2017 data.]()
 * [References](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#references)
-
-## Examples
-[Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
 
 ## Requirements
 
@@ -389,6 +386,9 @@ merged|All counts in a .txt tab delimited table
 rse|.rds file with RangedSummarized Experiment Object with Counts
 processed\_rse|.rds file with RangedSummarizedExperiment Object with quotients, smoothed, Log2, and ZScores for all S phase samples. Medians values for replicates are also included
 bedgraphs|Zipped bedgraphs with calculated values from processed\_rse
+
+## Examples
+[Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
 
 ## References:
 
