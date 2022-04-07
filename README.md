@@ -1,4 +1,4 @@
-[release](/github/release/babel/babel)
+![release](/github/release/babel/babel)
 # Process_RepTiming_Snakemake
 
 ## Project Description:
