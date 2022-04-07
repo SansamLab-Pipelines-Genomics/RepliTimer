@@ -14,6 +14,7 @@
 Process_RepTiming_Snakemake describes how to process short whole-genome sequening reads from G1 and S phase cells into replication timing values. Each of the individual data processing steps are described, which enables step-by-step processing to be done. Alternatively, a Snakemake pipeline with clearly defined dependencies and Anaconda environments is also provided so that the data processing pipeline can be automated.
 
 ## Table of contents:
+* [Examples](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#examples)
 * [Requirements](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#requirements)
 * [Description of individual steps in pipeline](https://github.com/SansamLab/Process_HiC_SnakeMake/edit/main/README.md#description-of-individual-steps-in-pipeline)
   * [1.  trim_reads_with_fastp](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--trim_reads_with_fastp)
