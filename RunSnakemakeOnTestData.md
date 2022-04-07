@@ -38,22 +38,67 @@ conda activate SnakemakeEnv/
 ```
 
 ### 4. Modify the job-specific configuration files.
-![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/configFileImage.png)
-
 
 #### 4A. Modify the config/config.yml file
 The config.yml file should be preconfigured for the test data set. Check it to be sure:
+![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/configFileImage.png)
 
-### 4. Run pipeline with test data
+#### 4B. Modify the config/samples.csv file
+The testSamples.csv file in the config folder has paths to the test fastq files.
+![Sample Table Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/sampleTableImage.png)
+
+### 5A. Run pipeline with conda environments (Alternative 1)
+#### Install necessary conda environments
 ```
-sbatch --wrap="\
+sbatch --mem 32G \
+--wrap="\
+snakemake \
+--cores all \
+--use-conda \
+--conda-prefix condEnvs/ \
+--conda-create-envs-only \
+--conda-frontend conda"
+```
+#### Run pipeline with conda environments
+```bash
+While within the root directory of the repository clone, enter the following command.
+sbatch --constraint=westmere \
+--wrap="\
 snakemake \
 -R \
 -j 999 \
+--use-conda \
+--conda-prefix condEnvs/ \
+--conda-frontend conda \
+--latency-wait 100 \
 --cluster-config config/cluster_config.yml \
 --cluster '\
 sbatch \
---constraint=westmere \
+-A {cluster.account} \
+-p {cluster.partition} \
+--cpus-per-task {cluster.cpus-per-task}  \
+--mem {cluster.mem} \
+--output {cluster.output}'"
+```
+
+### 5A. Run pipeline with installed modules (Alternative 2)
+#### Modify Snakefile with modules installed on your hpc
+Each rule in the workflow/Snakefile file has modules listed. These should be changed to match the names of the modules on your hpc. For example:
+![rule change example](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/make-test-vignette/resources/ruleChangeExample.png)
+
+#### Run pipeline with modules installed on hpc
+While within the root directory of the repository clone, enter the following command.
+```bash
+sbatch --constraint=westmere \
+--wrap="\
+snakemake \
+-R \
+-j 999 \
+--use-envmodules \
+--latency-wait 100 \
+--cluster-config config/cluster_config.yml \
+--cluster '\
+sbatch \
 -A {cluster.account} \
 -p {cluster.partition} \
 --cpus-per-task {cluster.cpus-per-task}  \
