@@ -5,7 +5,7 @@
 ![LastCommit](https://img.shields.io/github/last-commit/SansamLab/Process_RepTiming_Snakemake)
 ![Downloads](https://img.shields.io/github/downloads/SansamLab/Process_RepTiming_Snakemake/total)
 ![OpenIssues](https://img.shields.io/github/issues-raw/SansamLab/Process_RepTiming_Snakemake)
-
+[![DOI](https://zenodo.org/badge/472901755.svg)](https://zenodo.org/badge/latestdoi/472901755)
 
 # Process_RepTiming_Snakemake
 
