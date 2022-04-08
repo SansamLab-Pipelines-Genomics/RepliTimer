@@ -144,141 +144,303 @@ You should get an output like this:
 ```
 results
 ├── [   0]  aligned/
-│   ├── [ 21M]  testInput.bam
-│   ├── [1.9M]  testInput.bam.bai
-│   ├── [ 21M]  testInput2.bam
-│   ├── [1.9M]  testInput2.bam.bai
-│   ├── [ 21M]  testSample.bam
-│   ├── [1.9M]  testSample.bam.bai
-│   ├── [ 21M]  testSample2.bam
-│   └── [1.9M]  testSample2.bam.bai
+│   ├── [3.0G]  SRR4036047_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036047_28hpf_G1.bam.bai
+│   ├── [3.2G]  SRR4036048_28hpf_S.bam
+│   ├── [1.1M]  SRR4036048_28hpf_S.bam.bai
+│   ├── [3.5G]  SRR4036049_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036049_28hpf_G1.bam.bai
+│   ├── [4.6G]  SRR4036050_28hpf_S.bam
+│   ├── [1.5M]  SRR4036050_28hpf_S.bam.bai
+│   ├── [8.1G]  SRR4036051_28hpf_G1.bam
+│   ├── [3.7M]  SRR4036051_28hpf_G1.bam.bai
+│   ├── [9.2G]  SRR4036052_28hpf_S.bam
+│   ├── [3.8M]  SRR4036052_28hpf_S.bam.bai
+│   ├── [1.5G]  SRR4036059_Bud.bam
+│   ├── [1.1M]  SRR4036059_Bud.bam.bai
+│   ├── [1.8G]  SRR4036060_Bud.bam
+│   ├── [1.1M]  SRR4036060_Bud.bam.bai
+│   ├── [4.3G]  SRR4036061_ZTF_G1.bam
+│   ├── [1.4M]  SRR4036061_ZTF_G1.bam.bai
+│   ├── [4.3G]  SRR4036062_ZTF_S.bam
+│   └── [1.3M]  SRR4036062_ZTF_S.bam.bai
 ├── [   0]  bedgraphs/
-│   ├── [5.6M]  test_Log2Ratios_bedgraphs.gz
-│   ├── [2.2M]  test_Quotients_bedgraphs.gz
-│   ├── [5.3M]  test_Smoothed_bedgraphs.gz
-│   └── [6.3M]  test_ZScores_bedgraphs.gz
+│   ├── [ 17M]  Siefert2017_Log2Ratios_bedgraphs.gz
+│   ├── [ 16M]  Siefert2017_Quotients_bedgraphs.gz
+│   ├── [ 16M]  Siefert2017_Smoothed_bedgraphs.gz
+│   └── [ 18M]  Siefert2017_ZScores_bedgraphs.gz
 ├── [   0]  counts/
-│   ├── [2.9M]  testInput2_counts.bedgraph
-│   ├── [2.9M]  testInput_counts.bedgraph
-│   ├── [2.9M]  testSample2_counts.bedgraph
-│   └── [2.9M]  testSample_counts.bedgraph
+│   ├── [3.1M]  SRR4036047_28hpf_G1_counts.bedgraph
+│   ├── [3.1M]  SRR4036048_28hpf_S_counts.bedgraph
+│   ├── [3.1M]  SRR4036049_28hpf_G1_counts.bedgraph
+│   ├── [3.1M]  SRR4036050_28hpf_S_counts.bedgraph
+│   ├── [3.2M]  SRR4036051_28hpf_G1_counts.bedgraph
+│   ├── [3.2M]  SRR4036052_28hpf_S_counts.bedgraph
+│   ├── [3.1M]  SRR4036059_Bud_counts.bedgraph
+│   ├── [3.1M]  SRR4036060_Bud_counts.bedgraph
+│   ├── [3.1M]  SRR4036061_ZTF_G1_counts.bedgraph
+│   └── [3.1M]  SRR4036062_ZTF_S_counts.bedgraph
 ├── [   0]  doubleFilteredBams/
-│   ├── [ 17M]  testInput.bam
-│   ├── [1.7M]  testInput.bam.bai
-│   ├── [ 17M]  testInput2.bam
-│   ├── [1.7M]  testInput2.bam.bai
-│   ├── [ 17M]  testSample.bam
-│   ├── [1.7M]  testSample.bam.bai
-│   ├── [ 17M]  testSample2.bam
-│   └── [1.7M]  testSample2.bam.bai
+│   ├── [2.3G]  SRR4036047_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036047_28hpf_G1.bam.bai
+│   ├── [2.5G]  SRR4036048_28hpf_S.bam
+│   ├── [1.1M]  SRR4036048_28hpf_S.bam.bai
+│   ├── [2.7G]  SRR4036049_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036049_28hpf_G1.bam.bai
+│   ├── [3.5G]  SRR4036050_28hpf_S.bam
+│   ├── [1.3M]  SRR4036050_28hpf_S.bam.bai
+│   ├── [5.9G]  SRR4036051_28hpf_G1.bam
+│   ├── [3.3M]  SRR4036051_28hpf_G1.bam.bai
+│   ├── [6.7G]  SRR4036052_28hpf_S.bam
+│   ├── [3.4M]  SRR4036052_28hpf_S.bam.bai
+│   ├── [1.1G]  SRR4036059_Bud.bam
+│   ├── [1.1M]  SRR4036059_Bud.bam.bai
+│   ├── [1.4G]  SRR4036060_Bud.bam
+│   ├── [1.1M]  SRR4036060_Bud.bam.bai
+│   ├── [3.4G]  SRR4036061_ZTF_G1.bam
+│   ├── [1.2M]  SRR4036061_ZTF_G1.bam.bai
+│   ├── [3.3G]  SRR4036062_ZTF_S.bam
+│   └── [1.2M]  SRR4036062_ZTF_S.bam.bai
 ├── [   0]  duplicatesMarkedBam/
-│   ├── [2.0M]  testInput.bai
-│   ├── [ 21M]  testInput.bam
-│   ├── [1.9M]  testInput.bam.bai
-│   ├── [2.0M]  testInput2.bai
-│   ├── [ 21M]  testInput2.bam
-│   ├── [1.9M]  testInput2.bam.bai
-│   ├── [2.0M]  testSample.bai
-│   ├── [ 21M]  testSample.bam
-│   ├── [1.9M]  testSample.bam.bai
-│   ├── [2.0M]  testSample2.bai
-│   ├── [ 21M]  testSample2.bam
-│   └── [1.9M]  testSample2.bam.bai
+│   ├── [3.6M]  SRR4036047_28hpf_G1.bai
+│   ├── [3.0G]  SRR4036047_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036047_28hpf_G1.bam.bai
+│   ├── [3.6M]  SRR4036048_28hpf_S.bai
+│   ├── [3.3G]  SRR4036048_28hpf_S.bam
+│   ├── [1.1M]  SRR4036048_28hpf_S.bam.bai
+│   ├── [3.6M]  SRR4036049_28hpf_G1.bai
+│   ├── [3.5G]  SRR4036049_28hpf_G1.bam
+│   ├── [1.2M]  SRR4036049_28hpf_G1.bam.bai
+│   ├── [3.7M]  SRR4036050_28hpf_S.bai
+│   ├── [4.6G]  SRR4036050_28hpf_S.bam
+│   ├── [1.7M]  SRR4036050_28hpf_S.bam.bai
+│   ├── [3.9M]  SRR4036051_28hpf_G1.bai
+│   ├── [8.1G]  SRR4036051_28hpf_G1.bam
+│   ├── [3.7M]  SRR4036051_28hpf_G1.bam.bai
+│   ├── [3.9M]  SRR4036052_28hpf_S.bai
+│   ├── [9.2G]  SRR4036052_28hpf_S.bam
+│   ├── [3.8M]  SRR4036052_28hpf_S.bam.bai
+│   ├── [3.2M]  SRR4036059_Bud.bai
+│   ├── [1.5G]  SRR4036059_Bud.bam
+│   ├── [1.1M]  SRR4036059_Bud.bam.bai
+│   ├── [3.3M]  SRR4036060_Bud.bai
+│   ├── [1.9G]  SRR4036060_Bud.bam
+│   ├── [1.1M]  SRR4036060_Bud.bam.bai
+│   ├── [3.8M]  SRR4036061_ZTF_G1.bai
+│   ├── [4.3G]  SRR4036061_ZTF_G1.bam
+│   ├── [1.6M]  SRR4036061_ZTF_G1.bam.bai
+│   ├── [3.8M]  SRR4036062_ZTF_S.bai
+│   ├── [4.3G]  SRR4036062_ZTF_S.bam
+│   └── [1.5M]  SRR4036062_ZTF_S.bam.bai
 ├── [   0]  filteredBams/
-│   ├── [ 18M]  testInput.bam
-│   ├── [1.7M]  testInput.bam.bai
-│   ├── [ 18M]  testInput2.bam
-│   ├── [1.7M]  testInput2.bam.bai
-│   ├── [ 17M]  testSample.bam
-│   ├── [1.7M]  testSample.bam.bai
-│   ├── [ 17M]  testSample2.bam
-│   └── [1.7M]  testSample2.bam.bai
+│   ├── [2.4G]  SRR4036047_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036047_28hpf_G1.bam.bai
+│   ├── [2.6G]  SRR4036048_28hpf_S.bam
+│   ├── [1.1M]  SRR4036048_28hpf_S.bam.bai
+│   ├── [2.8G]  SRR4036049_28hpf_G1.bam
+│   ├── [1.1M]  SRR4036049_28hpf_G1.bam.bai
+│   ├── [3.7G]  SRR4036050_28hpf_S.bam
+│   ├── [1.3M]  SRR4036050_28hpf_S.bam.bai
+│   ├── [6.2G]  SRR4036051_28hpf_G1.bam
+│   ├── [3.4M]  SRR4036051_28hpf_G1.bam.bai
+│   ├── [7.1G]  SRR4036052_28hpf_S.bam
+│   ├── [3.5M]  SRR4036052_28hpf_S.bam.bai
+│   ├── [1.2G]  SRR4036059_Bud.bam
+│   ├── [1.1M]  SRR4036059_Bud.bam.bai
+│   ├── [1.5G]  SRR4036060_Bud.bam
+│   ├── [1.1M]  SRR4036060_Bud.bam.bai
+│   ├── [3.5G]  SRR4036061_ZTF_G1.bam
+│   ├── [1.2M]  SRR4036061_ZTF_G1.bam.bai
+│   ├── [3.4G]  SRR4036062_ZTF_S.bam
+│   └── [1.2M]  SRR4036062_ZTF_S.bam.bai
 ├── [   0]  logs/
-│   ├── [2.1K]  align_reads_with_bwamem.testInput.log
-│   ├── [2.1K]  align_reads_with_bwamem.testInput2.log
-│   ├── [2.1K]  align_reads_with_bwamem.testSample.log
-│   ├── [2.1K]  align_reads_with_bwamem.testSample2.log
-│   ├── [ 661]  blacklist_filter_with_bedtools.testInput.log
-│   ├── [ 665]  blacklist_filter_with_bedtools.testInput2.log
-│   ├── [ 665]  blacklist_filter_with_bedtools.testSample.log
-│   ├── [ 669]  blacklist_filter_with_bedtools.testSample2.log
-│   ├── [1.5K]  count_reads_in_RT_windows.testInput.log
-│   ├── [1.5K]  count_reads_in_RT_windows.testInput2.log
-│   ├── [1.6K]  count_reads_in_RT_windows.testSample.log
-│   ├── [1.6K]  count_reads_in_RT_windows.testSample2.log
-│   ├── [ 26K]  make_bedgraphs.test.log
-│   ├── [4.8K]  mark_duplicates_with_picard.testInput.log
-│   ├── [4.8K]  mark_duplicates_with_picard.testInput2.log
-│   ├── [4.8K]  mark_duplicates_with_picard.testSample.log
-│   ├── [4.8K]  mark_duplicates_with_picard.testSample2.log
-│   ├── [3.4K]  merge_count_tables.test.log
+│   ├── [ 42K]  align_reads_with_bwamem.SRR4036047_28hpf_G1.log
+│   ├── [ 44K]  align_reads_with_bwamem.SRR4036048_28hpf_S.log
+│   ├── [ 48K]  align_reads_with_bwamem.SRR4036049_28hpf_G1.log
+│   ├── [ 62K]  align_reads_with_bwamem.SRR4036050_28hpf_S.log
+│   ├── [127K]  align_reads_with_bwamem.SRR4036051_28hpf_G1.log
+│   ├── [146K]  align_reads_with_bwamem.SRR4036052_28hpf_S.log
+│   ├── [ 16K]  align_reads_with_bwamem.SRR4036059_Bud.log
+│   ├── [ 23K]  align_reads_with_bwamem.SRR4036060_Bud.log
+│   ├── [ 66K]  align_reads_with_bwamem.SRR4036061_ZTF_G1.log
+│   ├── [ 65K]  align_reads_with_bwamem.SRR4036062_ZTF_S.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036047_28hpf_G1.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036048_28hpf_S.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036049_28hpf_G1.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036050_28hpf_S.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036051_28hpf_G1.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036052_28hpf_S.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036059_Bud.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036060_Bud.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036061_ZTF_G1.log
+│   ├── [1.1K]  blacklist_filter_with_bedtools.SRR4036062_ZTF_S.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036047_28hpf_G1.log
+│   ├── [1.9K]  count_reads_in_RT_windows.SRR4036048_28hpf_S.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036049_28hpf_G1.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036050_28hpf_S.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036051_28hpf_G1.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036052_28hpf_S.log
+│   ├── [2.0K]  count_reads_in_RT_windows.SRR4036059_Bud.log
+│   ├── [2.0K]  count_reads_in_RT_windows.SRR4036060_Bud.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036061_ZTF_G1.log
+│   ├── [2.1K]  count_reads_in_RT_windows.SRR4036062_ZTF_S.log
+│   ├── [ 27K]  make_bedgraphs.Siefert2017.log
+│   ├── [ 14K]  mark_duplicates_with_picard.SRR4036047_28hpf_G1.log
+│   ├── [ 14K]  mark_duplicates_with_picard.SRR4036048_28hpf_S.log
+│   ├── [ 15K]  mark_duplicates_with_picard.SRR4036049_28hpf_G1.log
+│   ├── [ 19K]  mark_duplicates_with_picard.SRR4036050_28hpf_S.log
+│   ├── [ 33K]  mark_duplicates_with_picard.SRR4036051_28hpf_G1.log
+│   ├── [ 36K]  mark_duplicates_with_picard.SRR4036052_28hpf_S.log
+│   ├── [9.3K]  mark_duplicates_with_picard.SRR4036059_Bud.log
+│   ├── [ 10K]  mark_duplicates_with_picard.SRR4036060_Bud.log
+│   ├── [ 19K]  mark_duplicates_with_picard.SRR4036061_ZTF_G1.log
+│   ├── [ 18K]  mark_duplicates_with_picard.SRR4036062_ZTF_S.log
+│   ├── [4.0K]  merge_count_tables.Siefert2017.log
 │   ├── [   0]  picard_metrics/
-│   │   ├── [3.5K]  testInput.marked.duplicates_metrics.txt
-│   │   ├── [3.5K]  testInput2.marked.duplicates_metrics.txt
-│   │   ├── [3.5K]  testSample.marked.duplicates_metrics.txt
-│   │   └── [3.5K]  testSample2.marked.duplicates_metrics.txt
-│   ├── [6.9K]  process_count_tables.test.log
-│   ├── [ 658]  quality_filter_with_bamtools.testInput.log
-│   ├── [ 662]  quality_filter_with_bamtools.testInput2.log
-│   ├── [ 662]  quality_filter_with_bamtools.testSample.log
-│   ├── [ 666]  quality_filter_with_bamtools.testSample2.log
+│   │   ├── [3.4K]  SRR4036047_28hpf_G1.marked.duplicates_metrics.txt
+│   │   ├── [3.4K]  SRR4036048_28hpf_S.marked.duplicates_metrics.txt
+│   │   ├── [3.4K]  SRR4036049_28hpf_G1.marked.duplicates_metrics.txt
+│   │   ├── [3.4K]  SRR4036050_28hpf_S.marked.duplicates_metrics.txt
+│   │   ├── [3.5K]  SRR4036051_28hpf_G1.marked.duplicates_metrics.txt
+│   │   ├── [3.5K]  SRR4036052_28hpf_S.marked.duplicates_metrics.txt
+│   │   ├── [3.4K]  SRR4036059_Bud.marked.duplicates_metrics.txt
+│   │   ├── [3.4K]  SRR4036060_Bud.marked.duplicates_metrics.txt
+│   │   ├── [3.4K]  SRR4036061_ZTF_G1.marked.duplicates_metrics.txt
+│   │   └── [3.4K]  SRR4036062_ZTF_S.marked.duplicates_metrics.txt
+│   ├── [7.2K]  process_count_tables.Siefert2017.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036047_28hpf_G1.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036048_28hpf_S.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036049_28hpf_G1.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036050_28hpf_S.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036051_28hpf_G1.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036052_28hpf_S.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036059_Bud.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036060_Bud.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036061_ZTF_G1.log
+│   ├── [1.1K]  quality_filter_with_bamtools.SRR4036062_ZTF_S.log
 │   ├── [   0]  snakelogs/
-│   │   ├── [   0]  align_reads_with_bwamem.testInput.log
-│   │   ├── [   0]  align_reads_with_bwamem.testInput2.log
-│   │   ├── [   0]  align_reads_with_bwamem.testSample.log
-│   │   ├── [   0]  align_reads_with_bwamem.testSample2.log
-│   │   ├── [   0]  blacklist_filter_with_bedtools.testInput.log
-│   │   ├── [   0]  blacklist_filter_with_bedtools.testInput2.log
-│   │   ├── [   0]  blacklist_filter_with_bedtools.testSample.log
-│   │   ├── [   0]  blacklist_filter_with_bedtools.testSample2.log
-│   │   ├── [   0]  count_reads_in_RT_windows.testInput.log
-│   │   ├── [   0]  count_reads_in_RT_windows.testInput2.log
-│   │   ├── [   0]  count_reads_in_RT_windows.testSample.log
-│   │   ├── [   0]  count_reads_in_RT_windows.testSample2.log
-│   │   ├── [   0]  mark_duplicates_with_picard.testInput.log
-│   │   ├── [   0]  mark_duplicates_with_picard.testInput2.log
-│   │   ├── [   0]  mark_duplicates_with_picard.testSample.log
-│   │   ├── [   0]  mark_duplicates_with_picard.testSample2.log
-│   │   ├── [   0]  quality_filter_with_bamtools.testInput.log
-│   │   ├── [   0]  quality_filter_with_bamtools.testInput2.log
-│   │   ├── [   0]  quality_filter_with_bamtools.testSample.log
-│   │   ├── [   0]  quality_filter_with_bamtools.testSample2.log
-│   │   ├── [   0]  test_make_bedgraphs.log
-│   │   ├── [   0]  test_merge_count_tables.log
-│   │   ├── [   0]  test_process_count_tables.log
-│   │   ├── [   0]  trim_reads_with_fastp.testInput.log
-│   │   ├── [   0]  trim_reads_with_fastp.testInput2.log
-│   │   ├── [   0]  trim_reads_with_fastp.testSample.log
-│   │   └── [   0]  trim_reads_with_fastp.testSample2.log
-│   ├── [1.9K]  trim_reads_with_fastp.testInput.log
-│   ├── [2.0K]  trim_reads_with_fastp.testInput2.log
-│   ├── [2.0K]  trim_reads_with_fastp.testSample.log
-│   └── [2.0K]  trim_reads_with_fastp.testSample2.log
+│   │   ├── [   0]  Siefert2017_make_bedgraphs.log
+│   │   ├── [   0]  Siefert2017_merge_count_tables.log
+│   │   ├── [   0]  Siefert2017_process_count_tables.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036047_28hpf_G1.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036048_28hpf_S.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036049_28hpf_G1.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036050_28hpf_S.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036051_28hpf_G1.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036052_28hpf_S.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036059_Bud.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036060_Bud.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036061_ZTF_G1.log
+│   │   ├── [   0]  align_reads_with_bwamem.SRR4036062_ZTF_S.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036047_28hpf_G1.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036048_28hpf_S.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036049_28hpf_G1.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036050_28hpf_S.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036051_28hpf_G1.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036052_28hpf_S.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036059_Bud.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036060_Bud.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036061_ZTF_G1.log
+│   │   ├── [   0]  blacklist_filter_with_bedtools.SRR4036062_ZTF_S.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036047_28hpf_G1.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036048_28hpf_S.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036049_28hpf_G1.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036050_28hpf_S.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036051_28hpf_G1.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036052_28hpf_S.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036059_Bud.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036060_Bud.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036061_ZTF_G1.log
+│   │   ├── [   0]  count_reads_in_RT_windows.SRR4036062_ZTF_S.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036047_28hpf_G1.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036048_28hpf_S.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036049_28hpf_G1.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036050_28hpf_S.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036051_28hpf_G1.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036052_28hpf_S.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036059_Bud.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036060_Bud.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036061_ZTF_G1.log
+│   │   ├── [   0]  mark_duplicates_with_picard.SRR4036062_ZTF_S.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036047_28hpf_G1.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036048_28hpf_S.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036049_28hpf_G1.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036050_28hpf_S.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036051_28hpf_G1.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036052_28hpf_S.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036059_Bud.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036060_Bud.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036061_ZTF_G1.log
+│   │   ├── [   0]  quality_filter_with_bamtools.SRR4036062_ZTF_S.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036047_28hpf_G1.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036048_28hpf_S.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036049_28hpf_G1.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036050_28hpf_S.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036051_28hpf_G1.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036052_28hpf_S.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036059_Bud.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036060_Bud.log
+│   │   ├── [   0]  trim_reads_with_fastp.SRR4036061_ZTF_G1.log
+│   │   └── [   0]  trim_reads_with_fastp.SRR4036062_ZTF_S.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036047_28hpf_G1.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036048_28hpf_S.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036049_28hpf_G1.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036050_28hpf_S.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036051_28hpf_G1.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036052_28hpf_S.log
+│   ├── [2.4K]  trim_reads_with_fastp.SRR4036059_Bud.log
+│   ├── [2.4K]  trim_reads_with_fastp.SRR4036060_Bud.log
+│   ├── [2.5K]  trim_reads_with_fastp.SRR4036061_ZTF_G1.log
+│   └── [2.5K]  trim_reads_with_fastp.SRR4036062_ZTF_S.log
 ├── [   0]  merged/
-│   └── [941K]  test_counts.txt
+│   └── [4.8M]  Siefert2017_counts.txt
 ├── [   0]  processed_rse/
-│   └── [8.9M]  test_processed_rse.rds
+│   └── [ 32M]  Siefert2017_processed_rse.rds
 ├── [   0]  qc/
 │   └── [   0]  fastp_reports/
-│       ├── [467K]  testInput.html
-│       ├── [122K]  testInput.json
-│       ├── [467K]  testInput2.html
-│       ├── [122K]  testInput2.json
-│       ├── [467K]  testSample.html
-│       ├── [121K]  testSample.json
-│       ├── [467K]  testSample2.html
-│       └── [121K]  testSample2.json
+│       ├── [452K]  SRR4036047_28hpf_G1.html
+│       ├── [117K]  SRR4036047_28hpf_G1.json
+│       ├── [452K]  SRR4036048_28hpf_S.html
+│       ├── [117K]  SRR4036048_28hpf_S.json
+│       ├── [452K]  SRR4036049_28hpf_G1.html
+│       ├── [117K]  SRR4036049_28hpf_G1.json
+│       ├── [453K]  SRR4036050_28hpf_S.html
+│       ├── [117K]  SRR4036050_28hpf_S.json
+│       ├── [454K]  SRR4036051_28hpf_G1.html
+│       ├── [118K]  SRR4036051_28hpf_G1.json
+│       ├── [454K]  SRR4036052_28hpf_S.html
+│       ├── [119K]  SRR4036052_28hpf_S.json
+│       ├── [451K]  SRR4036059_Bud.html
+│       ├── [115K]  SRR4036059_Bud.json
+│       ├── [451K]  SRR4036060_Bud.html
+│       ├── [116K]  SRR4036060_Bud.json
+│       ├── [450K]  SRR4036061_ZTF_G1.html
+│       ├── [116K]  SRR4036061_ZTF_G1.json
+│       ├── [451K]  SRR4036062_ZTF_S.html
+│       └── [116K]  SRR4036062_ZTF_S.json
 ├── [   0]  rse/
-│   └── [356K]  test_rse.rds
+│   └── [2.0M]  Siefert2017_rse.rds
 └── [   0]  trimmed/
-    ├── [7.8M]  testInput2_trimmed_R1.fastq.gz
-    ├── [8.5M]  testInput2_trimmed_R2.fastq.gz
-    ├── [7.8M]  testInput_trimmed_R1.fastq.gz
-    ├── [8.5M]  testInput_trimmed_R2.fastq.gz
-    ├── [7.8M]  testSample2_trimmed_R1.fastq.gz
-    ├── [8.5M]  testSample2_trimmed_R2.fastq.gz
-    ├── [7.8M]  testSample_trimmed_R1.fastq.gz
-    └── [8.5M]  testSample_trimmed_R2.fastq.gz
+    ├── [1.4G]  SRR4036047_28hpf_G1_trimmed_R1.fastq.gz
+    ├── [1.4G]  SRR4036047_28hpf_G1_trimmed_R2.fastq.gz
+    ├── [1.6G]  SRR4036048_28hpf_S_trimmed_R1.fastq.gz
+    ├── [1.6G]  SRR4036048_28hpf_S_trimmed_R2.fastq.gz
+    ├── [1.7G]  SRR4036049_28hpf_G1_trimmed_R1.fastq.gz
+    ├── [1.8G]  SRR4036049_28hpf_G1_trimmed_R2.fastq.gz
+    ├── [2.2G]  SRR4036050_28hpf_S_trimmed_R1.fastq.gz
+    ├── [2.2G]  SRR4036050_28hpf_S_trimmed_R2.fastq.gz
+    ├── [4.4G]  SRR4036051_28hpf_G1_trimmed_R1.fastq.gz
+    ├── [4.4G]  SRR4036051_28hpf_G1_trimmed_R2.fastq.gz
+    ├── [5.0G]  SRR4036052_28hpf_S_trimmed_R1.fastq.gz
+    ├── [5.0G]  SRR4036052_28hpf_S_trimmed_R2.fastq.gz
+    ├── [720M]  SRR4036059_Bud_trimmed_R1.fastq.gz
+    ├── [720M]  SRR4036059_Bud_trimmed_R2.fastq.gz
+    ├── [910M]  SRR4036060_Bud_trimmed_R1.fastq.gz
+    ├── [907M]  SRR4036060_Bud_trimmed_R2.fastq.gz
+    ├── [2.2G]  SRR4036061_ZTF_G1_trimmed_R1.fastq.gz
+    ├── [2.3G]  SRR4036061_ZTF_G1_trimmed_R2.fastq.gz
+    ├── [2.2G]  SRR4036062_ZTF_S_trimmed_R1.fastq.gz
+    └── [2.2G]  SRR4036062_ZTF_S_trimmed_R2.fastq.gz
 
-15 directories, 121 files
+15 directories, 283 files
 ```
