@@ -1,5 +1,5 @@
-![Release](https://img.shields.io/github/v/release/SansamLab/Process_RepTiming_Snakemake?include_prereleases)
-![ReleaseDate](https://img.shields.io/github/release-date-pre/SansamLab/Process_RepTiming_Snakemake?include_prereleases)
+![Release](https://img.shields.io/github/v/release/SansamLab/Process_RepTiming_Snakemake)
+![ReleaseDate](https://img.shields.io/github/release-date/SansamLab/Process_RepTiming_Snakemake)
 ![Size](https://img.shields.io/github/repo-size/SansamLab/Process_RepTiming_Snakemake)
 ![License](https://img.shields.io/github/license/SansamLab/Process_RepTiming_Snakemake)
 ![LastCommit](https://img.shields.io/github/last-commit/SansamLab/Process_RepTiming_Snakemake)
