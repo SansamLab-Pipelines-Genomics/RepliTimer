@@ -70,11 +70,11 @@ conda activate SnakemakeEnv/
 
 #### 5A. Modify the config/config.yml file
 The config.yml file is preconfigured for the test data set, so the path to the .csv file must be changed.
-![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/configFileImage.png)
+![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/SiefertSamplesTableImage.png)
 
 #### 5B. Modify the config/Siefert_Samples.csv file
 The Siefert_Samples.csv file in the config folder has relative paths to the fastq files transferred from SRA. If the path differs in your system update it in Siefert_Samples.csv.
-![Sample Table Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/sampleTableImage.png)
+![Sample Table Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/SiefertSamplesTableImage.png)
 
 ### 6A. Run pipeline with conda environments (Alternative 1)
 #### Install necessary conda environments
