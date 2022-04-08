@@ -43,7 +43,7 @@ Process_RepTiming_Snakemake describes how to process short whole-genome sequenin
 * [Output structure](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#output-structure)
 * [Examples](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#examples)
   * [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
-  * [Run Snakemake pipeline with Siefert, 2017 data.]()
+  * [Run Snakemake pipeline with Siefert, 2017 data.](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnSiefert2017.md)
 * [References](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#references)
 
 ## Requirements
@@ -389,6 +389,7 @@ bedgraphs|Zipped bedgraphs with calculated values from processed\_rse
 
 ## Examples
 [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
+[Run Snakemake pipeline with Siefert, 2017 data.](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnSiefert2017.md)
 
 ## References:
 
