@@ -229,9 +229,9 @@ ml miniconda/4.11.0
 ```
 ### 2.  Clone repository
 ```bash
-git clone https://github.com/SansamLab/Process_RepTiming_Snakemake.git
+git clone https://github.com/SansamLab/RepliTimer.git
 # rename folder with project name
-mv Process_RepTiming_Snakemake/ My_RT_Project_Folder/
+mv RepliTimer/ My_RT_Project_Folder/
 # change directory into root of your project folder
 cd My_RT_Project_Folder
 ```
