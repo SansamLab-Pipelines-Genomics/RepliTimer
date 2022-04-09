@@ -4,8 +4,8 @@ authors:
 - family-names: "Sansam"
   given-names: "Christopher L."
   orcid: "https://orcid.org/0000-0002-0545-2693"
-title: "SansamLab/Process_RepTiming_Snakemake: v1.0.3"
-version: v1.0.3
+title: "RepliTimer"
+version: v1.0.4
 doi:  10.5281/zenodo.6426314
 date-released: 2022-04-08
-url: "https://github.com/SansamLab/Process_RepTiming_Snakemake"
+url: "https://github.com/SansamLab/RepliTimer"
