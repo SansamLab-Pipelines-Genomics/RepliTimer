@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
 - family-names: "Sansam"
-  given-names: "Christopher"
+  given-names: "Christopher L."
   orcid: "https://orcid.org/0000-0002-0545-2693"
 title: "SansamLab/Process_RepTiming_Snakemake: v1.0.3"
 version: v1.0.3
