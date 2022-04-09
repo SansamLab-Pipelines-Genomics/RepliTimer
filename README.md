@@ -9,6 +9,8 @@
 
 # RepliTimer
 
+![graphic](https://github.com/SansamLab/RepliTimer/blob/main/graphic.png)
+
 ## Project Description:
 
 RepliTimer processes short whole-genome sequencing reads from any organism's G1 and S phase cells into replication timing values. To enable step-by-step data processing, we describe each of the individual data processing steps. We provide a Snakemake pipeline with clearly defined dependencies and Anaconda environments to automate the pipeline. We include a compact dataset in the repository that you may use to test the pipeline. We also provide an example detailing how RepliTimer can be used to process publicly available replication timing data from zebrafish.
