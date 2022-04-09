@@ -9,6 +9,11 @@
 
 # RepliTimer
 
+<figure>
+<img src="https://github.com/SansamLab/RepliTimer/blob/main/graphic.png" alt="Trulli" style="width:100%">
+<figcaption align = "right"><b>image made in BioRander.com</b></figcaption>
+</figure>
+
 ![graphic](https://github.com/SansamLab/RepliTimer/blob/main/graphic.png)
 
 ## Project Description:
