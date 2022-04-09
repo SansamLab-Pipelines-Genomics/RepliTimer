@@ -44,9 +44,9 @@ ml miniconda/4.11.0
 ```
 ### 3.  Clone repository
 ```bash
-git clone https://github.com/SansamLab/Process_RepTiming_Snakemake.git
+git clone https://github.com/SansamLab/RepliTimer.git
 # rename folder with project name
-mv Process_RepTiming_Snakemake/ Siefert2017_RT_Project_Folder/
+mv RepliTimer/ Siefert2017_RT_Project_Folder/
 # change directory into root of your project folder
 cd Siefert2017_RT_Project_Folder
 ```
@@ -70,11 +70,11 @@ conda activate SnakemakeEnv/
 
 #### 5A. Modify the config/config.yml file
 The config.yml file is preconfigured for the test data set, so the path to the .csv file must be changed.
-![Config File Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/SiefertSamplesTableImage.png)
+![Config File Image](https://github.com/SansamLab/RepliTimer/blob/main/resources/SiefertSamplesTableImage.png)
 
 #### 5B. Modify the config/Siefert_Samples.csv file
 The Siefert_Samples.csv file in the config folder has relative paths to the fastq files transferred from SRA. If the path differs in your system update it in Siefert_Samples.csv.
-![Sample Table Image](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/SiefertSamplesImage.png)
+![Sample Table Image](https://github.com/SansamLab/RepliTimer/blob/main/resources/SiefertSamplesImage.png)
 
 ### 6A. Run pipeline with conda environments (Alternative 1)
 #### Install necessary conda environments
@@ -113,7 +113,7 @@ sbatch \
 ### 6B. Run pipeline with installed modules (Alternative 2)
 #### Modify Snakefile with modules installed on your hpc
 Each rule in the workflow/Snakefile file has modules listed. These should be changed to match the names of the modules on your hpc. For example:
-![rule change example](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/ruleChangeExample.png)
+![rule change example](https://github.com/SansamLab/RepliTimer/blob/main/resources/ruleChangeExample.png)
 
 #### Run pipeline with modules installed on hpc
 While within the root directory of the repository clone, enter the following command.
