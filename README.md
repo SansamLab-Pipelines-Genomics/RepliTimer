@@ -1,50 +1,50 @@
-![Release](https://img.shields.io/github/v/release/SansamLab/Process_RepTiming_Snakemake)
-![ReleaseDate](https://img.shields.io/github/release-date/SansamLab/Process_RepTiming_Snakemake)
-![Size](https://img.shields.io/github/repo-size/SansamLab/Process_RepTiming_Snakemake)
-![License](https://img.shields.io/github/license/SansamLab/Process_RepTiming_Snakemake)
-![LastCommit](https://img.shields.io/github/last-commit/SansamLab/Process_RepTiming_Snakemake)
-![Downloads](https://img.shields.io/github/downloads/SansamLab/Process_RepTiming_Snakemake/total)
-![OpenIssues](https://img.shields.io/github/issues-raw/SansamLab/Process_RepTiming_Snakemake)
+![Release](https://img.shields.io/github/v/release/SansamLab/RepliTimer)
+![ReleaseDate](https://img.shields.io/github/release-date/SansamLab/RepliTimer)
+![Size](https://img.shields.io/github/repo-size/SansamLab/RepliTimer)
+![License](https://img.shields.io/github/license/SansamLab/RepliTimer)
+![LastCommit](https://img.shields.io/github/last-commit/SansamLab/RepliTimer)
+![Downloads](https://img.shields.io/github/downloads/SansamLab/RepliTimer/total)
+![OpenIssues](https://img.shields.io/github/issues-raw/SansamLab/RepliTimer)
 [![DOI](https://zenodo.org/badge/472901755.svg)](https://zenodo.org/badge/latestdoi/472901755)
 
-# Process_RepTiming_Snakemake
+# RepliTimer
 
 ## Project Description:
 
-Process_RepTiming_Snakemake describes how to process short whole-genome sequening reads from G1 and S phase cells into replication timing values. Each of the individual data processing steps are described, which enables step-by-step processing to be done. Alternatively, a Snakemake pipeline with clearly defined dependencies and Anaconda environments is also provided so that the data processing pipeline can be automated.
+RepliTimer processes short whole-genome sequencing reads from any organism's G1 and S phase cells into replication timing values. To enable step-by-step data processing, we describe each of the individual data processing steps. We provide a Snakemake pipeline with clearly defined dependencies and Anaconda environments to automate the pipeline. We include a compact dataset in the repository that you may use to test the pipeline. We also provide an example detailing how RepliTimer can be used to process publicly available replication timing data from zebrafish.
 
 ## Table of contents:
-* [Requirements](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#requirements)
+* [Requirements](https://github.com/SansamLab/RepliTimer/blob/main/README.md#requirements)
 * [Description of individual steps in pipeline](https://github.com/SansamLab/Process_HiC_SnakeMake/edit/main/README.md#description-of-individual-steps-in-pipeline)
-  * [1.  trim_reads_with_fastp](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--trim_reads_with_fastp)
-  * [2.  align_reads_with_bwamem](https://github.com/SansamLab/Process_RepTiming_Snakemake#2--run_bwa_mem)
-  * [3.  mark_duplicates_with_picard](https://github.com/SansamLab/Process_RepTiming_Snakemake#3--mark_duplicates_with_picard)
-  * [4.  quality_filter_with_bamtools](https://github.com/SansamLab/Process_RepTiming_Snakemake#4--quality_filter_with_bamtools)
-  * [5.  blacklist_filter_with_bedtools](https://github.com/SansamLab/Process_RepTiming_Snakemake#5--blacklist_filter_with_bedtools)
-  * [6.  count_reads_in_RT_windows](https://github.com/SansamLab/Process_RepTiming_Snakemake#6--count_reads_in_rt_windows)
-  * [7.  Merge count tables](https://github.com/SansamLab/Process_RepTiming_Snakemake#7--merge-count-tables)
-  * [8.  Process count tables](https://github.com/SansamLab/Process_RepTiming_Snakemake#8--process-count-tables)
-  * [9.  Make bedgraphs](https://github.com/SansamLab/Process_RepTiming_Snakemake#9--make-bedgraphs)
-* [Step-by-step instructions on running Snakemake pipeline:](https://github.com/SansamLab/Process_RepTiming_Snakemake#step-by-step-instructions-on-running-snakemake-pipeline)
-  * [1.  Load slurm and miniconda](https://github.com/SansamLab/Process_RepTiming_Snakemake#1--load-slurm-and-miniconda)
-  * [2.  Clone repository](https://github.com/SansamLab/Process_RepTiming_Snakemake#2--clone-repository)
-  * [3.  Start the conda environment](https://github.com/SansamLab/Process_RepTiming_Snakemake#3--start-the-conda-environment)
-    * [3A.  FIRST TIME ONLY:  Setup conda environment](https://github.com/SansamLab/Process_RepTiming_Snakemake#3a--first-time-only--setup-conda-environment)
-    * [3B.  Activate conda environment](https://github.com/SansamLab/Process_RepTiming_Snakemake#3b--activate-conda-environment)
-  * [4.  Modify the job-specific configuration files.](https://github.com/SansamLab/Process_RepTiming_Snakemake#4--modify-the-job-specific-configuration-files)
-    * [4A.  Modify the config/config.yml file](https://github.com/SansamLab/Process_RepTiming_Snakemake#4a--modify-the-configconfigyml-file)
-    * [4B.  Modify the config/samples.csv file](https://github.com/SansamLab/Process_RepTiming_Snakemake#4b--modify-the-configsamplescsv-file)
-    * [4C.  IF SLURM RESOURCE CHANGES ARE NEEDED. Modify the config/cluster_config.yml file](https://github.com/SansamLab/Process_RepTiming_Snakemake#4c--if-slurm-resource-changes-are-needed-modify-the-configcluster_configyml-file)
-  * [5.  Do a dry run](https://github.com/SansamLab/Process_RepTiming_Snakemake#5--do-a-dry-run)
-  * [6.  Make a DAG diagram](https://github.com/SansamLab/Process_RepTiming_Snakemake#6--make-a-dag-diagram)
-  * [7.  Run on cluster with slurm](https://github.com/SansamLab/Process_RepTiming_Snakemake#7--run-on-cluster-with-slurm)
-    * [7A.  Use conda environments](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#7a-use-conda-environments)
-    * [7B.  Use modules](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#7b-use-environment-modules)
-* [Output structure](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#output-structure)
-* [Examples](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#examples)
-  * [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
-  * [Run Snakemake pipeline with Siefert, 2017 data.](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnSiefert2017.md)
-* [References](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/README.md#references)
+  * [1.  trim_reads_with_fastp](https://github.com/SansamLab/RepliTimer#1--trim_reads_with_fastp)
+  * [2.  align_reads_with_bwamem](https://github.com/SansamLab/RepliTimer#2--run_bwa_mem)
+  * [3.  mark_duplicates_with_picard](https://github.com/SansamLab/RepliTimer#3--mark_duplicates_with_picard)
+  * [4.  quality_filter_with_bamtools](https://github.com/SansamLab/RepliTimer#4--quality_filter_with_bamtools)
+  * [5.  blacklist_filter_with_bedtools](https://github.com/SansamLab/RepliTimer#5--blacklist_filter_with_bedtools)
+  * [6.  count_reads_in_RT_windows](https://github.com/SansamLab/RepliTimer#6--count_reads_in_rt_windows)
+  * [7.  Merge count tables](https://github.com/SansamLab/RepliTimer#7--merge-count-tables)
+  * [8.  Process count tables](https://github.com/SansamLab/RepliTimer#8--process-count-tables)
+  * [9.  Make bedgraphs](https://github.com/SansamLab/RepliTimer#9--make-bedgraphs)
+* [Step-by-step instructions on running Snakemake pipeline:](https://github.com/SansamLab/RepliTimer#step-by-step-instructions-on-running-snakemake-pipeline)
+  * [1.  Load slurm and miniconda](https://github.com/SansamLab/RepliTimer#1--load-slurm-and-miniconda)
+  * [2.  Clone repository](https://github.com/SansamLab/RepliTimer#2--clone-repository)
+  * [3.  Start the conda environment](https://github.com/SansamLab/RepliTimer#3--start-the-conda-environment)
+    * [3A.  FIRST TIME ONLY:  Setup conda environment](https://github.com/SansamLab/RepliTimer#3a--first-time-only--setup-conda-environment)
+    * [3B.  Activate conda environment](https://github.com/SansamLab/RepliTimer#3b--activate-conda-environment)
+  * [4.  Modify the job-specific configuration files.](https://github.com/SansamLab/RepliTimer#4--modify-the-job-specific-configuration-files)
+    * [4A.  Modify the config/config.yml file](https://github.com/SansamLab/RepliTimer#4a--modify-the-configconfigyml-file)
+    * [4B.  Modify the config/samples.csv file](https://github.com/SansamLab/RepliTimer#4b--modify-the-configsamplescsv-file)
+    * [4C.  IF SLURM RESOURCE CHANGES ARE NEEDED. Modify the config/cluster_config.yml file](https://github.com/SansamLab/RepliTimer#4c--if-slurm-resource-changes-are-needed-modify-the-configcluster_configyml-file)
+  * [5.  Do a dry run](https://github.com/SansamLab/RepliTimer#5--do-a-dry-run)
+  * [6.  Make a DAG diagram](https://github.com/SansamLab/RepliTimer#6--make-a-dag-diagram)
+  * [7.  Run on cluster with slurm](https://github.com/SansamLab/RepliTimer#7--run-on-cluster-with-slurm)
+    * [7A.  Use conda environments](https://github.com/SansamLab/RepliTimer/blob/main/README.md#7a-use-conda-environments)
+    * [7B.  Use modules](https://github.com/SansamLab/RepliTimer/blob/main/README.md#7b-use-environment-modules)
+* [Output structure](https://github.com/SansamLab/RepliTimer/blob/main/README.md#output-structure)
+* [Examples](https://github.com/SansamLab/RepliTimer/blob/main/README.md#examples)
+  * [Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/RepliTimer/blob/main/RunSnakemakeOnTestData.md)
+  * [Run Snakemake pipeline with Siefert, 2017 data.](https://github.com/SansamLab/RepliTimer/blob/main/RunSnakemakeOnSiefert2017.md)
+* [References](https://github.com/SansamLab/RepliTimer/blob/main/README.md#references)
 
 ## Requirements
 
@@ -70,7 +70,7 @@ Snakemake cluster config file|.csv file with cluster configuration parameters in
 
 The data are processed according to Siefert, 2017 and Siefert, 2018 with some modifications. Paired-end sequencing reads are trimmed with fastp and then aligned to the genome using BWA-mem. Aligned reads are filtered using picard tools, bamtools, and bedtools. Reads are counted in user selected replication timing windows using the R bamsignals package with a custom R script. The S/G1 quotients are calculated for each window using a custom R script and then smoothed with a with a cubic smoothing spline through a custom R script and the pspline R package. The smoothed quotients are then transformed into log2 values or z-scores. If replicate data is provided, median values are calculated. Individual and median data for all samples are provided in an R RangedSummarizedExperiment (.rds) file and in individual .bedgraph files. 
 
-![DAG of Test Pipeline](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/resources/dag.png)
+![DAG of Test Pipeline](https://github.com/SansamLab/RepliTimer/blob/main/resources/dag.png)
 
 ### 1.  trim_reads_with_fastp
 ```bash
@@ -388,8 +388,8 @@ processed\_rse|.rds file with RangedSummarizedExperiment Object with quotients, 
 bedgraphs|Zipped bedgraphs with calculated values from processed\_rse
 
 ## Examples
-[Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnTestData.md)
-[Run Snakemake pipeline with Siefert, 2017 data.](https://github.com/SansamLab/Process_RepTiming_Snakemake/blob/main/RunSnakemakeOnSiefert2017.md)
+[Run Snakemake pipeline with sample data included in repository](https://github.com/SansamLab/RepliTimer/blob/main/RunSnakemakeOnTestData.md)
+[Run Snakemake pipeline with Siefert, 2017 data.](https://github.com/SansamLab/RepliTimer/blob/main/RunSnakemakeOnSiefert2017.md)
 
 ## References:
 
