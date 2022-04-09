@@ -11,7 +11,7 @@
 
 <figure>
 <img src="https://github.com/SansamLab/RepliTimer/blob/main/graphic.png" alt="Trulli" style="width:100%">
-<figcaption align = "bottom" style=" text-align : right">image made in BioRander.com</figcaption>
+<figcaption align = "bottom" style=" text-align : right">image made in BioRender.com</figcaption>
 </figure>
 
 ## Project Description:
