@@ -15,7 +15,7 @@ RepliTimer processes short whole-genome sequencing reads from any organism's G1 
 
 ## Table of contents:
 * [Requirements](https://github.com/SansamLab/RepliTimer/blob/main/README.md#requirements)
-* [Description of individual steps in pipeline](https://github.com/SansamLab/Process_HiC_SnakeMake/edit/main/README.md#description-of-individual-steps-in-pipeline)
+* [Description of individual steps in pipeline](https://github.com/SansamLab/RepliTimer/blob/main/README.md#description-of-individual-steps-in-pipeline)
   * [1.  trim_reads_with_fastp](https://github.com/SansamLab/RepliTimer#1--trim_reads_with_fastp)
   * [2.  align_reads_with_bwamem](https://github.com/SansamLab/RepliTimer#2--run_bwa_mem)
   * [3.  mark_duplicates_with_picard](https://github.com/SansamLab/RepliTimer#3--mark_duplicates_with_picard)
