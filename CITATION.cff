@@ -5,7 +5,7 @@ authors:
   given-names: "Christopher L."
   orcid: "https://orcid.org/0000-0002-0545-2693"
 title: "RepliTimer"
-version: v1.0.7
+version: v1.0.8
 doi:  10.5281/zenodo.6426313
 date-released: 2022-04-08
 url: "https://github.com/SansamLab/RepliTimer"
