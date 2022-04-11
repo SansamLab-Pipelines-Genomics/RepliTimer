@@ -4,8 +4,33 @@
 
 Here we describe the step-by-step process used to run the snakemake pipeline on the Siefert 2017 data, which can be obtained from SRA.
 
-### 1.  Transfer .fastq files from SRA.
-This package lacks the functionality to do this. We recommend using the fasterq-dump to transfer the files from SRA. In this example, we create a directory in which the .fastq files are transferred to a subdirectory called "fastqs". The locations of the .fastq files defined in the "Siefert_Samples.csv" provided in this repo as "../fastqs/SRR4036047_1.fastq".
+### 1.  Index zebrafish genome
+This pipeline lacks the funtionality for this. We recommend transferring the genome sequence with wget. At this time, we are uncertain how alternative chromosome sequences will affect the quantitation of aligned sequencing reads. Therefore, we have chosen to use the primary genome assembly, which lacks alternative chromosome sequences. For zebrafish, we separate the primary sequences from alternative sequences using grep.
+
+#### 1.1 Load necessary software
+```bash
+ml seqtk bwa python
+```
+
+#### 1.2 Copy GRCz11 fasta to local directory
+```bash
+sbatch --wrap=\
+"wget -e robots=off --reject 'index.html' https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/035/GCF_000002035.6_GRCz11/GCF_000002035.6_GRCz11_genomic.fna.gz"
+```
+
+#### 1.3. Get primary sequences (non-Alts) and rename chromosomes
+```bash
+sbatch --wrap=\
+"zcat GCF_000002035.6_GRCz11_genomic.fna.gz | seqtk seq -l 3000000000 | grep Primary -A 1 | sed 's/>/>chrUn/g' | seqtk seq -l 100 | sed 's/^.*chromosome />chr/g' | sed 's/,.*$//g' | gzip > GCF_000002035.6_GRCz11_primary_genomic.fna.gz"
+```
+
+#### 1.4. Index primary genome with bwa
+```bash
+sbatch --mem 32G --wrap="bwa index GCF_000002035.6_GRCz11_primary_genomic.fna.gz"
+```
+
+### 2.  Transfer .fastq files from SRA.
+This pipeline lacks the functionality to do this. We recommend using the fasterq-dump to transfer the files from SRA. In this example, we create a directory in which the .fastq files are transferred to a subdirectory called "fastqs". The locations of the .fastq files defined in the "Siefert_Samples.csv" provided in this repo as "../fastqs/SRR4036047_1.fastq".
 
 ```bash
 # load the module with fasterq-dump. note:  this will likely differ on your system
@@ -35,14 +60,14 @@ for t in ${SRAIDS[@]}; do
 cd ..
 ```
 
-### 2.  Load slurm and miniconda
+### 3.  Load slurm and miniconda
 Note. The commands to do this will be different on your machine. These commands are specific to an HPC with slurm and miniconda modules installed.
 
 ```bash
 ml slurm/20.02
 ml miniconda/4.11.0
 ```
-### 3.  Clone repository
+### 4.  Clone repository
 ```bash
 git clone https://github.com/SansamLab/RepliTimer.git
 # rename folder with project name
@@ -50,8 +75,8 @@ mv RepliTimer/ Siefert2017_RT_Project_Folder/
 # change directory into root of your project folder
 cd Siefert2017_RT_Project_Folder
 ```
-### 4.  Start the snakemake conda environment
-#### 4A.  Setup the snakemake conda environment
+### 5.  Start the snakemake conda environment
+#### 5.1.  Setup the snakemake conda environment
 ```bash
 # sbatch submits a job script to slurm
 # the --wrap option wraps the quoted command string in a sh script and submits
@@ -61,23 +86,23 @@ cd Siefert2017_RT_Project_Folder
 sbatch --mem 16G --wrap="conda env create -f workflow/envs/SnakemakeEnv.yml -p SnakemakeEnv" 
 ```
 
-#### 4B.  Activate the snakemake conda environment
+#### 5.2.  Activate the snakemake conda environment
 ```bash
 conda activate SnakemakeEnv/
 ```
 
-### 5. Modify the job-specific configuration files.
+### 6. Modify the job-specific configuration files.
 
-#### 5A. Modify the config/config.yml file
+#### 6.1. Modify the config/config.yml file
 The config.yml file is preconfigured for the test data set, so the path to the .csv file must be changed.
 ![Config File Image](https://github.com/SansamLab/RepliTimer/blob/main/resources/SiefertSamplesTableImage.png)
 
-#### 5B. Modify the config/Siefert_Samples.csv file
+#### 6.2. Modify the config/Siefert_Samples.csv file
 The Siefert_Samples.csv file in the config folder has relative paths to the fastq files transferred from SRA. If the path differs in your system update it in Siefert_Samples.csv.
 ![Sample Table Image](https://github.com/SansamLab/RepliTimer/blob/main/resources/SiefertSamplesImage.png)
 
-### 6A. Run pipeline with conda environments (Alternative 1)
-#### Install necessary conda environments
+### 7A. Run pipeline with conda environments (Alternative 1)
+#### 7A.1. Install necessary conda environments
 ```
 sbatch --mem 32G \
 --wrap="\
@@ -88,7 +113,7 @@ snakemake \
 --conda-create-envs-only \
 --conda-frontend conda"
 ```
-#### Run pipeline with conda environments
+#### 7A.2. Run pipeline with conda environments
 ```bash
 While within the root directory of the repository clone, enter the following command.
 sbatch --constraint=westmere \
@@ -110,12 +135,12 @@ sbatch \
 --output {cluster.output}'"
 ```
 
-### 6B. Run pipeline with installed modules (Alternative 2)
-#### Modify Snakefile with modules installed on your hpc
+### 7B. Run pipeline with installed modules (Alternative 2)
+#### 7B.1. Modify Snakefile with modules installed on your hpc
 Each rule in the workflow/Snakefile file has modules listed. These should be changed to match the names of the modules on your hpc. For example:
 ![rule change example](https://github.com/SansamLab/RepliTimer/blob/main/resources/ruleChangeExample.png)
 
-#### Run pipeline with modules installed on hpc
+#### 7B.2. Run pipeline with modules installed on hpc
 While within the root directory of the repository clone, enter the following command.
 ```bash
 sbatch --constraint=westmere \
@@ -134,7 +159,7 @@ sbatch \
 --mem {cluster.mem} \
 --output {cluster.output}'"
 ```
-### 7.  Check output in the results/ directory
+### 8.  Check output in the results/ directory
 Use the tree program to list all of the files with sizes.
 ```bash
 tree -hF results
