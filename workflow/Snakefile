@@ -192,7 +192,7 @@ rule merge_count_tables:
             merged="results/merged/{sample}_counts.txt"
         params:
             sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
-            counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
+            counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index))
         envmodules:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
@@ -201,12 +201,12 @@ rule merge_count_tables:
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         shell:
             """
+            # echo tab-delimited sample names to table header
             SAMPLES=( {params.sample_list} )
-            BEDGRAPHS=( {params.counts_bedgraphs_list} )
-            # echo tab-separated sample names to output as a header
             echo ${SAMPLES[@]} | tr " " "\t" > {output.merged}
-            # paste every fourth column from bedgraphs
-            paste ${BEDGRAPHS[@]} | head | awk -F'\t' '{for(i=4;i<=NF;i+=4){printf "%s\t",$i;} print ""}' >> {output.merged}
+            # paste every 4th column from bedgraphs to output
+            BEDGRAPHS=( {params.counts_bedgraphs_list} )
+            paste ${BEDGRAPHS[@]} | awk -F'\t' '{for(i=4;i<=NF;i+=4){printf "%s\t",$i;} print ""}' >> {output.merged}
             """
 
 rule merge_count_tables2:
