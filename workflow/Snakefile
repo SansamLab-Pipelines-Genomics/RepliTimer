@@ -252,36 +252,75 @@ rule process_count_tables:
 ##                       Make bedgraphs                        ##
 #################################################################
 
-rule make_bedgraphs:
+rule make_Log2Ratios_bedgraphs:
         input:
             rse_processed="results/processed_rse/{sample}_processed_rse.rds"
         output:
-            Log2Ratios_bedgraphs="results/bedgraphs/{sample}_Log2Ratios_bedgraphs.gz",
-            ZScores_bedgraphs="results/bedgraphs/{sample}_ZScores_bedgraphs.gz",
+            Log2Ratios_bedgraphs="results/bedgraphs/{sample}_Log2Ratios_bedgraphs.gz"
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_make_Log2Ratios_bedgraphs.log"
+        shell:
+            """
+            mkdir Log2Ratios
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Log2Ratios"
+            tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
+            rm -rf Log2Ratios
+            """
+rule make_ZScores_bedgraphs:
+        input:
+            rse_processed="results/processed_rse/{sample}_processed_rse.rds"
+        output:
+            ZScores_bedgraphs="results/bedgraphs/{sample}_ZScores_bedgraphs.gz"
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_make_ZScores_bedgraphs.log"
+        shell:
+            """
+            mkdir ZScores
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "ZScores"
+            tar -czvf {output.ZScores_bedgraphs} ZScores/
+            rm -rf ZScores
+            """
+rule make_Smoothed_bedgraphs:
+        input:
+            rse_processed="results/processed_rse/{sample}_processed_rse.rds"
+        output:
             Smoothed_bedgraphs="results/bedgraphs/{sample}_Smoothed_bedgraphs.gz",
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_make_Smoothed_bedgraphs.log"
+        shell:
+            """
+            mkdir Smoothed
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Smoothed"
+            tar -czvf {output.Smoothed_bedgraphs} Smoothed/
+            rm -rf Smoothed
+            """
+rule make_Quotients_bedgraphs:
+        input:
+            rse_processed="results/processed_rse/{sample}_processed_rse.rds"
+        output:
             Quotients_bedgraphs="results/bedgraphs/{sample}_Quotients_bedgraphs.gz"
         envmodules:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
         conda:
             "envs/RTEnv_R.yml"
-        log: "results/logs/snakelogs/{sample}_make_bedgraphs.log"
+        log: "results/logs/snakelogs/{sample}_make_Quotients_bedgraphs.log"
         shell:
             """
-            mkdir Log2Ratios
-            mkdir ZScores
-            mkdir Smoothed
             mkdir Quotients
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Log2Ratios"
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "ZScores"
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Smoothed"
             Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Quotients"
-            tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
-            tar -czvf {output.ZScores_bedgraphs} ZScores/
-            tar -czvf {output.Smoothed_bedgraphs} Smoothed/
             tar -czvf {output.Quotients_bedgraphs} Quotients/
-            rm -rf Log2Ratios
-            rm -rf ZScores
-            rm -rf Smoothed
             rm -rf Quotients
             """
