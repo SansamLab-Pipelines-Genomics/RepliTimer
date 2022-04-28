@@ -193,7 +193,6 @@ rule merge_count_tables:
         params:
             sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
             counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
-            counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index))
         envmodules:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
@@ -204,16 +203,10 @@ rule merge_count_tables:
             """
             SAMPLES=( {params.sample_list} )
             BEDGRAPHS=( {params.counts_bedgraphs_list} )
-            TEMP_COUNTS=( {params.counts_temp_list} )
-            mkdir results/temp_merge
-            for i in ${{!BEDGRAPHS[@]}}; do 
-                echo -e "\t\t\t${{SAMPLES[i]}}" > ${{TEMP_COUNTS[i]}}.header
-                cut -f4 ${{BEDGRAPHS[i]}} > ${{TEMP_COUNTS[i]}}.counts
-                cat ${{TEMP_COUNTS[i]}}.header ${{TEMP_COUNTS[i]}}.counts > ${{TEMP_COUNTS[i]}}
-                rm ${{TEMP_COUNTS[i]}}.header
-                rm ${{TEMP_COUNTS[i]}}.counts
-            done 
-            paste {params.counts_temp_list} > {output.merged}
+            # echo tab-separated sample names to output as a header
+            echo ${SAMPLES[@]} | tr " " "\t" > {output.merged}
+            # paste every fourth column from bedgraphs
+            paste ${BEDGRAPHS[@]} | head | awk -F'\t' '{for(i=4;i<=NF;i+=4){printf "%s\t",$i;} print ""}' >> {output.merged}
             """
 
 rule merge_count_tables2:
