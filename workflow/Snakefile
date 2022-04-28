@@ -189,14 +189,11 @@ rule merge_count_tables:
         input:
             bedgraph_inputs
         output:
-            merged="results/merged/{sample}_counts.txt",
-            rse_counts="results/rse/{sample}_rse.rds"
+            merged="results/merged/{sample}_counts.txt"
         params:
             sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
             counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
-            counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index)),
-            samples_table=config["samples_table"],
-            RT_windows=config["RT_windows"]
+            counts_temp_list=' '.join(expand("results/temp_merge/{samples}_counts_temp.txt",samples=samples_table.index))
         envmodules:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
@@ -217,7 +214,24 @@ rule merge_count_tables:
                 rm ${{TEMP_COUNTS[i]}}.counts
             done 
             paste {params.counts_temp_list} > {output.merged}
-            rm -rf results/temp_merge/
+            """
+
+rule merge_count_tables2:
+        input:
+            merged="results/merged/{sample}_counts.txt"
+        output:
+            rse_counts="results/rse/{sample}_rse.rds"
+        params:
+            samples_table=config["samples_table"],
+            RT_windows=config["RT_windows"]
+        envmodules:
+            "R/4.1.2-mkl",
+            "bioconductor/3.14"
+        conda:
+            "envs/RTEnv_R.yml"
+        log: "results/logs/snakelogs/{sample}_merge_count_tables2.log"
+        shell:
+            """
             Rscript workflow/scripts/MakeCountsRSE_ver01.R {output.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
             """
 
