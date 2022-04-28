@@ -232,7 +232,7 @@ rule merge_count_tables2:
         log: "results/logs/snakelogs/{sample}_merge_count_tables2.log"
         shell:
             """
-            Rscript workflow/scripts/MakeCountsRSE_ver01.R {output.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
+            Rscript workflow/scripts/MakeCountsRSE_ver01.R {input.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
             """
 
 ###################################################################
