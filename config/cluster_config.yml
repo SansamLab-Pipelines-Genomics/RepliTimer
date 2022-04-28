@@ -79,7 +79,31 @@ process_count_tables:
     output: results/logs/{rule}.{wildcards.sample}.log
     error: results/logs/{rule}.{wildcards.sample}.err
 
-make_bedgraphs:
+make_Quotients_bedgraphs:
+    cpus-per-task: 2
+    mem:  16G
+    cores: 2
+    name: "{rule}.{wildcards.sample}"
+    output: results/logs/{rule}.{wildcards.sample}.log
+    error: results/logs/{rule}.{wildcards.sample}.err
+
+make_Log2Ratios_bedgraphs:
+    cpus-per-task: 2
+    mem:  16G
+    cores: 2
+    name: "{rule}.{wildcards.sample}"
+    output: results/logs/{rule}.{wildcards.sample}.log
+    error: results/logs/{rule}.{wildcards.sample}.err
+
+make_ZScores_bedgraphs:
+    cpus-per-task: 2
+    mem:  16G
+    cores: 2
+    name: "{rule}.{wildcards.sample}"
+    output: results/logs/{rule}.{wildcards.sample}.log
+    error: results/logs/{rule}.{wildcards.sample}.err
+
+make_Smoothed_bedgraphs:
     cpus-per-task: 2
     mem:  16G
     cores: 2
