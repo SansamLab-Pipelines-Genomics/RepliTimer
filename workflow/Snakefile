@@ -203,10 +203,10 @@ rule merge_count_tables:
             """
             # echo tab-delimited sample names to table header
             SAMPLES=( {params.sample_list} )
-            echo ${SAMPLES[@]} | tr " " "\t" > {output.merged}
+            echo ${{SAMPLES[@]}} | tr " " "\t" > {output.merged}
             # paste every 4th column from bedgraphs to output
             BEDGRAPHS=( {params.counts_bedgraphs_list} )
-            paste ${BEDGRAPHS[@]} | awk -F'\t' '{for(i=4;i<=NF;i+=4){printf "%s\t",$i;} print ""}' >> {output.merged}
+            paste ${{BEDGRAPHS[@]}} | awk -F'\t' '{for(i=4;i<=NF;i+=4){printf "%s\t",$i;} print ""}' >> {output.merged}
             """
 
 rule merge_count_tables2:
