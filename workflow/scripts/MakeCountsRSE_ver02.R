@@ -19,9 +19,6 @@ OutputFilename <- snakemake@output[["rse_counts"]]
 counts <- do.call("cbind",lapply(countsBedgraphs,function(filename){read.table(filename)[,4]}))
 names(counts) <- sampleNames
 
-# read counts
-counts <- read.table(countsTable,header=T)
-
 # read coldata
 coldata <- read.csv(colData)
 
