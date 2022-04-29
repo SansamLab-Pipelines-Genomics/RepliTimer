@@ -183,13 +183,14 @@ rule count_reads_in_RT_windows:
 
 rule merge_count_tables:
         input:
-            counts_bedgraphs_list=expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)
+            expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)
         output:
             rse_counts="results/rse/{sample}_rse.rds"
         params:
             sample_list=','.join(expand("{samples}",samples=samples_table.index)),
             samples_table=config["samples_table"],
-            RT_windows=config["RT_windows"]
+            RT_windows=config["RT_windows"],
+            counts_bedgraphs_list=','.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index))
         envmodules:
             "R/4.1.2-mkl",
             "bioconductor/3.14"
