@@ -181,40 +181,14 @@ rule count_reads_in_RT_windows:
 ##                      Merge count tables                     ##
 #################################################################
 
-def bedgraph_inputs(wildcards):
-    files = expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
-    return files
-
 rule merge_count_tables:
         input:
-            bedgraph_inputs
-        output:
-            merged="results/merged/{sample}_counts.txt"
-        params:
-            sample_list=' '.join(expand("{samples}",samples=samples_table.index)),
-            counts_bedgraphs_list=' '.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index))
-        envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
-        conda:
-            "envs/RTEnv_R.yml"
-        log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
-        shell:
-            """
-            # echo tab-delimited sample names to table header
-            SAMPLES=( {params.sample_list} )
-            echo ${{SAMPLES[@]}} | tr " " "\t" > {output.merged}
-            # paste every 4th column from bedgraphs to output
-            BEDGRAPHS=( {params.counts_bedgraphs_list} )
-            paste ${{BEDGRAPHS[@]}} | awk -F'\t' '{{for(i=4;i<=NF;i+=4){{printf "%s\t",$i;}} print ""}}' >> {output.merged}
-            """
-
-rule merge_count_tables2:
-        input:
-            merged="results/merged/{sample}_counts.txt"
+            expand("results/counts/{samples}_counts.bedgraph", samples = samples_table.index)
         output:
             rse_counts="results/rse/{sample}_rse.rds"
         params:
+            sample_list=','.join(expand("{samples}",samples=samples_table.index)),
+            counts_bedgraphs_list=','.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
             samples_table=config["samples_table"],
             RT_windows=config["RT_windows"]
         envmodules:
@@ -222,11 +196,9 @@ rule merge_count_tables2:
             "bioconductor/3.14"
         conda:
             "envs/RTEnv_R.yml"
-        log: "results/logs/snakelogs/{sample}_merge_count_tables2.log"
-        shell:
-            """
-            Rscript workflow/scripts/MakeCountsRSE_ver01.R {input.merged} {params.samples_table} {params.RT_windows} {output.rse_counts}
-            """
+        log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
+        script:
+            "workflow/scripts/MakeCountsRSE_ver02.R"
 
 ###################################################################
 ##                     Process count tables                      ##
