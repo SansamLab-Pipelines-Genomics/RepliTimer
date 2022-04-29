@@ -197,7 +197,7 @@ rule merge_count_tables:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         script:
-            "workflow/scripts/MakeCountsRSE_ver02.R"
+            "scripts/MakeCountsRSE_ver02.R"
 
 ###################################################################
 ##                     Process count tables                      ##
