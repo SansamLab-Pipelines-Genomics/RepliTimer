@@ -9,7 +9,7 @@ library(SummarizedExperiment)
 library(GenomicRanges)
 
 # get arguments from Snakemake S4 object
-countsBedgraphs <- strsplit(snakemake@params[["counts_bedgraphs_list"]], split = ",")
+countsBedgraphs <- strsplit(snakemake@input[["counts_bedgraphs_list"]], split = ",")
 sampleNames <- strsplit(snakemake@params[["sample_list"]], split = ",")
 colData <- snakemake@params[["samples_table"]]
 RTWindowsBedFile <- snakemake@params[["RT_windows"]]
