@@ -20,6 +20,9 @@ colData <- snakemake@params[["samples_table"]]
 RTWindowsBedFile <- snakemake@params[["RT_windows"]]
 OutputFilename <- snakemake@output[["rse_counts"]]
 
+# pause system to let file system catch up (important for systems with a lag it seems)
+Sys.sleep(length(countsBedgraphs)*10)
+
 # read 4th column of each bedgraph and then cbind to a dataframe
 counts <- do.call("cbind",lapply(countsBedgraphs,function(filename){read.table(filename)[,4]}))
 names(counts) <- sampleNames
