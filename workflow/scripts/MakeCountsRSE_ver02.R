@@ -12,10 +12,10 @@ library(GenomicRanges)
 countsBedgraphs <- snakemake@params[["counts_bedgraphs_list"]]
 print("this is the bedgraphs object before stringsplit")
 countsBedgraphs
-countsBedgraphs <- strsplit(snakemake@params[["counts_bedgraphs_list"]], split = ",")
+countsBedgraphs <- strsplit(snakemake@params[["counts_bedgraphs_list"]], split = ",")[[1]]
 print("this is the bedgraphs vector after stringsplit")
 countsBedgraphs
-sampleNames <- strsplit(snakemake@params[["sample_list"]], split = ",")
+sampleNames <- strsplit(snakemake@params[["sample_list"]], split = ",")[[1]]
 colData <- snakemake@params[["samples_table"]]
 RTWindowsBedFile <- snakemake@params[["RT_windows"]]
 OutputFilename <- snakemake@output[["rse_counts"]]
