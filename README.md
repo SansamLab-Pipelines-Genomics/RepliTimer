@@ -246,12 +246,12 @@ cd My_RT_Project_Folder
 # -f is the location of the environment .yml file. 
 ## The relative path assumes that you are in the root directory of this repository.
 # -p is the path where you want to install this environment
-conda env create -f workflow/envs/SnakemakeEnv.yml -p /s/sansam-lab/SnakemakeEnv 
+conda env create -f workflow/envs/SnakemakeEnv2.yml -p /s/sansam-lab/SnakemakeEnv2 
 ```
 
 #### 3B.  Activate conda environment with snakemake
 ```bash
-conda activate /s/sansam-lab/SnakemakeEnv
+conda activate /s/sansam-lab/SnakemakeEnv2
 ```
 
 ### 4.  Modify the job-specific configuration files.
