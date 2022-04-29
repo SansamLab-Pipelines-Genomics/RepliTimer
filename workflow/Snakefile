@@ -183,7 +183,7 @@ rule count_reads_in_RT_windows:
 
 rule merge_count_tables:
         input:
-            counts_bedgraphs_list=','.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)),
+            counts_bedgraphs_list=expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index)
         output:
             rse_counts="results/rse/{sample}_rse.rds"
         params:
