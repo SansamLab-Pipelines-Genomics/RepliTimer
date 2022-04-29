@@ -33,7 +33,7 @@ ranges.df <- read.table(countsBedgraphs[1])
 # convert dataframe to genomicRanges
 ranges.gr <- GenomicRanges::makeGRangesFromDataFrame(ranges.df,seqnames.field="V1",start.field="V2",end.field="V3")
 
-print("here is the head of the ranges.gr"
+print("here is the head of the ranges.gr")
 head(ranges.gr)
 
 # make ranged summarized experiment object
