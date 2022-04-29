@@ -39,6 +39,9 @@ rse <- SummarizedExperiment::SummarizedExperiment(
                     rowData=NULL, rowRanges=ranges.gr,
                     colData=coldata,
                     checkDimnames=TRUE)
-
+print("Here is some info on the rse made")
+rse
+print("Here are the dimensions of the assays")
+dim(assays(rse)$counts)
 # save ranged summarized experiment object as .rds file
 saveRDS(rse,OutputFilename)
