@@ -57,16 +57,8 @@ count_reads_in_RT_windows:
 
 merge_count_tables:
     cpus-per-task: 1
-    mem:  8G
-    cores: 1
-    name: "{rule}.{wildcards.sample}"
-    output: results/logs/{rule}.{wildcards.sample}.log
-    error: results/logs/{rule}.{wildcards.sample}.err
-
-merge_count_tables2:
-    cpus-per-task: 1
-    mem:  8G
-    cores: 1
+    mem:  16G
+    cores: 2
     name: "{rule}.{wildcards.sample}"
     output: results/logs/{rule}.{wildcards.sample}.log
     error: results/logs/{rule}.{wildcards.sample}.err
