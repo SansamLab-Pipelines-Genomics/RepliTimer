@@ -170,7 +170,7 @@ rule count_reads_in_RT_windows:
         config["R"],
         config["Bioconductor"]
     conda:
-        "envs/RTEnv.yml"
+        "envs/R_Scripts.yml"
     log: "results/logs/snakelogs/count_reads_in_RT_windows.{sample}.log"
     shell:
         """
@@ -195,7 +195,7 @@ rule merge_count_tables:
             config["R"],
             config["Bioconductor"]
         conda:
-            "envs/RTEnv_R.yml"
+            "envs/R_Scripts.yml"
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
         script:
             "scripts/MakeCountsRSE_ver02.R"
@@ -213,7 +213,7 @@ rule process_count_tables:
             config["R"],
             config["Bioconductor"]
         conda:
-            "envs/RTEnv_R.yml"
+            "envs/R_Scripts.yml"
         log: "results/logs/snakelogs/{sample}_process_count_tables.log"
         shell:
             """
@@ -233,7 +233,7 @@ rule make_Log2Ratios_bedgraphs:
             config["R"],
             config["Bioconductor"]
         conda:
-            "envs/RTEnv_R.yml"
+            "envs/R_Scripts.yml"
         log: "results/logs/snakelogs/{sample}_make_Log2Ratios_bedgraphs.log"
         shell:
             """
@@ -251,7 +251,7 @@ rule make_ZScores_bedgraphs:
             config["R"],
             config["Bioconductor"]
         conda:
-            "envs/RTEnv_R.yml"
+            "envs/R_Scripts.yml"
         log: "results/logs/snakelogs/{sample}_make_ZScores_bedgraphs.log"
         shell:
             """
@@ -269,7 +269,7 @@ rule make_Smoothed_bedgraphs:
             config["R"],
             config["Bioconductor"]
         conda:
-            "envs/RTEnv_R.yml"
+            "envs/R_Scripts.yml"
         log: "results/logs/snakelogs/{sample}_make_Smoothed_bedgraphs.log"
         shell:
             """
@@ -287,7 +287,7 @@ rule make_Quotients_bedgraphs:
             config["R"],
             config["Bioconductor"]
         conda:
-            "envs/RTEnv_R.yml"
+            "envs/R_Scripts.yml"
         log: "results/logs/snakelogs/{sample}_make_Quotients_bedgraphs.log"
         shell:
             """
