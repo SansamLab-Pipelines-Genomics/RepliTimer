@@ -43,7 +43,7 @@ rule trim_reads_with_fastp:
         fastp_report="results/qc/fastp_reports/{sample}.html",
         fastp_json="results/qc/fastp_reports/{sample}.json"
     envmodules:
-        "fastp/0.23.2"
+        config["fastp"]
     conda:
         "envs/RTEnv.yml"
     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
@@ -67,8 +67,8 @@ rule align_reads_with_bwamem:
         bam="results/aligned/{sample}.bam",
         bai="results/aligned/{sample}.bam.bai"
     envmodules:
-        "bwa/0.7.15",
-        "samtools/1.14"
+        config["bwa"],
+        config["samtools"]
     conda:
         "envs/RTEnv.yml"
     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
@@ -92,8 +92,8 @@ rule mark_duplicates_with_picard:
         marked_bai="results/duplicatesMarkedBam/{sample}.bam.bai",
         marked_metrics="results/logs/picard_metrics/{sample}.marked.duplicates_metrics.txt"
     envmodules:
-        "samtools/1.14",
-        "picard/2.21.2"
+        config["samtools"],
+        config["picard"]
     conda:
         "envs/RTEnv.yml"
     log: "results/logs/snakelogs/mark_duplicates_with_picard.{sample}.log"
@@ -118,8 +118,8 @@ rule quality_filter_with_bamtools:
         filtered_bam="results/filteredBams/{sample}.bam"
         #filtered_bai="results/filteredBams/{sample}.bam.bai"
     envmodules:
-        "samtools/1.14",
-        "bamtools/2.5.1"
+        config["samtools"],
+        config["bamtools"]
     conda:
         "envs/RTEnv.yml"
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
@@ -142,8 +142,8 @@ rule blacklist_filter_with_bedtools:
     output:   
         doubleFiltered_bam="results/doubleFilteredBams/{sample}.bam"
     envmodules:
-        "samtools/1.14",
-        "bedtools/2.30.0"
+        config["samtools"],
+        config["bedtools"]
     conda:
         "envs/RTEnv.yml"
     log: "results/logs/snakelogs/blacklist_filter_with_bedtools.{sample}.log"
@@ -167,8 +167,8 @@ rule count_reads_in_RT_windows:
     output:
         counts="results/counts/{sample}_counts.bedgraph"
     envmodules:
-        "R/4.1.2-mkl",
-        "bioconductor/3.14"
+        config["R"],
+        config["Bioconductor"]
     conda:
         "envs/RTEnv.yml"
     log: "results/logs/snakelogs/count_reads_in_RT_windows.{sample}.log"
@@ -192,8 +192,8 @@ rule merge_count_tables:
             RT_windows=config["RT_windows"],
             counts_bedgraphs_list=','.join(expand("results/counts/{samples}_counts.bedgraph",samples=samples_table.index))
         envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
+            config["R"],
+            config["Bioconductor"]
         conda:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_merge_count_tables.log"
@@ -210,8 +210,8 @@ rule process_count_tables:
         output:
             rse_processed="results/processed_rse/{sample}_processed_rse.rds"
         envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
+            config["R"],
+            config["Bioconductor"]
         conda:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_process_count_tables.log"
@@ -230,8 +230,8 @@ rule make_Log2Ratios_bedgraphs:
         output:
             Log2Ratios_bedgraphs="results/bedgraphs/{sample}_Log2Ratios_bedgraphs.gz"
         envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
+            config["R"],
+            config["Bioconductor"]
         conda:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_make_Log2Ratios_bedgraphs.log"
@@ -248,8 +248,8 @@ rule make_ZScores_bedgraphs:
         output:
             ZScores_bedgraphs="results/bedgraphs/{sample}_ZScores_bedgraphs.gz"
         envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
+            config["R"],
+            config["Bioconductor"]
         conda:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_make_ZScores_bedgraphs.log"
@@ -266,8 +266,8 @@ rule make_Smoothed_bedgraphs:
         output:
             Smoothed_bedgraphs="results/bedgraphs/{sample}_Smoothed_bedgraphs.gz",
         envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
+            config["R"],
+            config["Bioconductor"]
         conda:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_make_Smoothed_bedgraphs.log"
@@ -284,8 +284,8 @@ rule make_Quotients_bedgraphs:
         output:
             Quotients_bedgraphs="results/bedgraphs/{sample}_Quotients_bedgraphs.gz"
         envmodules:
-            "R/4.1.2-mkl",
-            "bioconductor/3.14"
+            config["R"],
+            config["Bioconductor"]
         conda:
             "envs/RTEnv_R.yml"
         log: "results/logs/snakelogs/{sample}_make_Quotients_bedgraphs.log"
