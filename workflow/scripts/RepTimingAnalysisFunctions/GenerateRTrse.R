@@ -8,6 +8,8 @@
 #' @export
 
 GenerateRTrse <- function(RTse,AllowGaps=TRUE){
+  # load RT functions
+  sapply(list.files(pattern="[.]R$", path="workflow/scripts/RepTimingAnalysisFunctions", full.names=TRUE), source)
   # sort the rse
     RTse <- SummarizedExperiment::sort(RTse)
   # convert counts to cpms
