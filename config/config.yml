@@ -8,3 +8,17 @@ bamtools_filter_mapQ: ">10"
 bedtools_intersect_blacklist: "resources/Satellites.bed"
 bedtools_intersect_greylist: "resources/HiCountWindows.bed" 
 RT_windows: "resources/RTWindows_danRer11_noAlts_ver01.bed"
+
+#################################################################
+##                     Environment Modules                     ##
+#################################################################
+# These will be specific to your cluster                        #
+#################################################################
+fastp: "fastp/0.23.2"
+bwa: "bwa/0.7.15"
+samtools: "samtools/1.14"
+picard: "picard/2.21.2"
+bamtools: "bamtools/2.5.1"
+bedtools: "bedtools/2.30.0"
+R: "R/4.1.2-mkl"
+Bioconductor: "bioconductor/3.14"
