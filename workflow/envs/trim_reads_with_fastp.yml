@@ -1,0 +1,15 @@
+name: /s/sansam-lab/CondasForRepliTimer/trim_reads_with_fastp
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=conda_forge
+  - _openmp_mutex=4.5=2_gnu
+  - fastp=0.23.2=hb7a2d85_2
+  - isa-l=2.30.0=ha770c72_4
+  - libdeflate=1.10=h7f98852_0
+  - libgcc-ng=11.2.0=h1d223b6_16
+  - libgomp=11.2.0=h1d223b6_16
+  - libstdcxx-ng=11.2.0=he4da1e4_16
+prefix: /s/sansam-lab/CondasForRepliTimer/trim_reads_with_fastp
