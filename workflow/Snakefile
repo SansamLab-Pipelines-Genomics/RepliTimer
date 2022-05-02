@@ -45,7 +45,7 @@ rule trim_reads_with_fastp:
     envmodules:
         config["fastp"]
     conda:
-        "envs/RTEnv.yml"
+        "envs/trim_reads_with_fastp.yml"
     log: "results/logs/snakelogs/trim_reads_with_fastp.{sample}.log"
     shell:
         """
@@ -70,7 +70,7 @@ rule align_reads_with_bwamem:
         config["bwa"],
         config["samtools"]
     conda:
-        "envs/RTEnv.yml"
+        "envs/align_reads_with_bwamem.yml"
     log: "results/logs/snakelogs/align_reads_with_bwamem.{sample}.log"
     shell:
         """
@@ -95,7 +95,7 @@ rule mark_duplicates_with_picard:
         config["samtools"],
         config["picard"]
     conda:
-        "envs/RTEnv.yml"
+        "envs/mark_duplicates_with_picard.yml"
     log: "results/logs/snakelogs/mark_duplicates_with_picard.{sample}.log"
     shell:
         """
@@ -121,7 +121,7 @@ rule quality_filter_with_bamtools:
         config["samtools"],
         config["bamtools"]
     conda:
-        "envs/RTEnv.yml"
+        "envs/quality_filter_with_bamtools.yml"
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
     shell:
         """
@@ -145,7 +145,7 @@ rule blacklist_filter_with_bedtools:
         config["samtools"],
         config["bedtools"]
     conda:
-        "envs/RTEnv.yml"
+        "envs/blacklist_filter_with_bedtools.yml"
     log: "results/logs/snakelogs/blacklist_filter_with_bedtools.{sample}.log"
     shell:
         """
