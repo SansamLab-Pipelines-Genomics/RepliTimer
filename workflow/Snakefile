@@ -26,7 +26,8 @@ rule all:
     input:
         expand("results/bedgraphs/{sample}_ZScores_bedgraphs.gz",sample = config["experiment_name"]),
         expand("results/bedgraphs/{sample}_Smoothed_bedgraphs.gz",sample = config["experiment_name"]),
-        expand("results/bedgraphs/{sample}_Quotients_bedgraphs.gz",sample = config["experiment_name"])
+        expand("results/bedgraphs/{sample}_Quotients_bedgraphs.gz",sample = config["experiment_name"]),
+        expand("results/bedgraphs/{sample}_Log2Ratios_bedgraphs.gz",sample = config["experiment_name"])
 
 ##################################################################
 ##                          Trim reads                          ##
