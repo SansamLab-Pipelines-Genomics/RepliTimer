@@ -240,7 +240,7 @@ rule make_Log2Ratios_bedgraphs:
             """
             mkdir Log2Ratios
             Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Log2Ratios"
-            tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
+            tar -czvfk {output.Log2Ratios_bedgraphs} Log2Ratios/
             rm -rf Log2Ratios
             """
 rule make_ZScores_bedgraphs:
