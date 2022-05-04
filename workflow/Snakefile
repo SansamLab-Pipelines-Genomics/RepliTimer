@@ -238,10 +238,9 @@ rule make_Log2Ratios_bedgraphs:
         log: "results/logs/snakelogs/{sample}_make_Log2Ratios_bedgraphs.log"
         shell:
             """
-            mkdir Log2Ratios
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Log2Ratios"
-            tar -czvf {output.Log2Ratios_bedgraphs} Log2Ratios/
-            #rm -rf Log2Ratios
+            mkdir -p results/Log2Ratios
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "results/Log2Ratios"
+            tar -czvf {output.Log2Ratios_bedgraphs} results/Log2Ratios/
             """
 rule make_ZScores_bedgraphs:
         input:
@@ -256,10 +255,9 @@ rule make_ZScores_bedgraphs:
         log: "results/logs/snakelogs/{sample}_make_ZScores_bedgraphs.log"
         shell:
             """
-            mkdir ZScores
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "ZScores"
-            tar -czvf {output.ZScores_bedgraphs} ZScores/
-            rm -rf ZScores
+            mkdir -p results/ZScores
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "results/ZScores"
+            tar -czvf {output.ZScores_bedgraphs} results/ZScores/
             """
 rule make_Smoothed_bedgraphs:
         input:
@@ -274,10 +272,9 @@ rule make_Smoothed_bedgraphs:
         log: "results/logs/snakelogs/{sample}_make_Smoothed_bedgraphs.log"
         shell:
             """
-            mkdir Smoothed
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Smoothed"
-            tar -czvf {output.Smoothed_bedgraphs} Smoothed/
-            rm -rf Smoothed
+            mkdir -p results/Smoothed
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "results/Smoothed"
+            tar -czvf {output.Smoothed_bedgraphs} results/Smoothed/
             """
 rule make_Quotients_bedgraphs:
         input:
@@ -292,8 +289,7 @@ rule make_Quotients_bedgraphs:
         log: "results/logs/snakelogs/{sample}_make_Quotients_bedgraphs.log"
         shell:
             """
-            mkdir Quotients
-            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "Quotients"
-            tar -czvf {output.Quotients_bedgraphs} Quotients/
-            rm -rf Quotients
+            mkdir -p results/Quotients
+            Rscript workflow/scripts/Generate_RT_Bedgraphs_ver01.R {input.rse_processed} "results/Quotients"
+            tar -czvf {output.Quotients_bedgraphs} results/Quotients/
             """
