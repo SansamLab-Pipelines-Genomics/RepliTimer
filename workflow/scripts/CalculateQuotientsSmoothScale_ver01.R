@@ -31,5 +31,11 @@ sapply(list.files(pattern="[.]R$", path="workflow/scripts/RepTimingAnalysisFunct
 # calculate quotients and then smooth and scale
 Processed_RTse <- GenerateRTrse(RTse,AllowGaps=FALSE)
 
+# add row names
+clDta <- SummarizedExperiment::colData(Processed_RTse)
+clDta[is.na(clDta$sample),"sample"] <- clDta$Replicate_ID[is.na(clDta$sample)]
+row.names(clDta) <- clDta$sample
+SummarizedExperiment::colData(Processed_RTse) <- clDta
+
 # save ranged summarized experiment object as .rds file
 saveRDS(Processed_RTse,OutputFilename)
