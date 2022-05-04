@@ -15,6 +15,7 @@ args <- commandArgs(trailingOnly = TRUE)
 
 rseFile <- args[1]
 assay <- args[2]
+assay2 <- paste(trimws(basename(assay)),collapse=" ")
 
 rse <- readRDS(rseFile)
 
@@ -28,7 +29,7 @@ for (SmplNme in SmplNmes) {
         Bedgraph_Filename=paste(
                          assay,
                          "/",
-                         SmplNme,"_",assay,
+                         SmplNme,"_",assay2,
                          ".bedgraph",
                          sep="") 
                        )
