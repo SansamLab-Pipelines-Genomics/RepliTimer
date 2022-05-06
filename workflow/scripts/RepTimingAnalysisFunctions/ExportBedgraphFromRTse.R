@@ -9,10 +9,10 @@
 #' @export
 
 ExportBedgraphFromRTse <- function(RTse,SampleName,Bedgraph_Filename,Assay){
-  assy <- assays(RTse)[[Assay]]
+  library(SummarizedExperiment)
+  assy <- SummarizedExperiment::assays(RTse)[[Assay]]
   assy <- assy[,grep(SampleName,colnames(assy))]
-  bg_df <- cbind(data.frame(rowRanges(RTse))[,1:3],
-                 assy)
+  bg_df <- cbind(data.frame(SummarizedExperiment::rowRanges(RTse))[,1:3],assy)
   write.table(bg_df,
               file=Bedgraph_Filename,
               quote=F,sep="\t",
