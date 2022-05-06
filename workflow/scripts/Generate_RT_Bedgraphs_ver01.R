@@ -25,7 +25,7 @@ for (SmplNme in SmplNmes) {
     ExportBedgraphFromRTse(
         RTse=rse,
         SampleName=SmplNme,
-        Assay=assay,
+        Assay=assay2,
         Bedgraph_Filename=paste(
                          assay,
                          "/",
