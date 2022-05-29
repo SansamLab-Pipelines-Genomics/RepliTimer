@@ -50,4 +50,5 @@ SmoothRseAssayToGaps <- function(rse,MaxGap=200000){
   })
   rse <- unlist(rseByChrm)
   SummarizedExperiment::assay(rse,withDimnames=FALSE)<-(do.call("rbind",smoothed.list))
-  return(rse)}
+  return(rse)
+}
