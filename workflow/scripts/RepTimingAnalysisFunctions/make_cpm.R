@@ -12,4 +12,5 @@
 
 make_cpm <- function(counts){
   cpmreads <- (counts / sum(counts,na.rm=T))*1000000
-  cpmreads }
+  return(cpmreads)
+}
