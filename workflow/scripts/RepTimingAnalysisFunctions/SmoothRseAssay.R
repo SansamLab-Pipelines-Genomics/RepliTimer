@@ -32,4 +32,5 @@ SmoothRseAssay <- function(rse){
     return(smoothed)
   })
   SummarizedExperiment::assay(rse,withDimnames=FALSE)<-(do.call("rbind",smoothed.list))
-  return(rse)}
+  return(rse)
+}
