@@ -1,13 +1,14 @@
-experiment_name: "test"
-samples_table: "config/Samples_template.csv"
+experiment_name: "Frazer_ALL"
+samples_table: "config/Samples.csv"
 fastp_cpus: 6
 bwa_cpus: 12
 picard_memory: "8G"
-bwa_genome: "/Volumes/hts_core/Shared/zebrafish/danRer11/noAlts/danRer11_noAlts.fa"
-bamtools_filter_mapQ: ">10"
+bwa_genome: "/s/sansam-lab/2022Aug04_Frazer_Lab_ALL_RT_Processing/genome_index/GCF_000002035.6_GRCz11_primary_genomic.fna.gz"
+bamtools_filter_mapQ: ">20"
 bedtools_intersect_blacklist: "resources/Satellites.bed"
-bedtools_intersect_greylist: "resources/HiCountWindows.bed" 
+bedtools_intersect_greylist: "resources/HiCountWindows.bed"
 RT_windows: "resources/RTWindows_danRer11_noAlts_ver01.bed"
+max_insert_size: 1000
 
 #################################################################
 ##                     Environment Modules                     ##
