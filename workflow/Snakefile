@@ -126,7 +126,7 @@ rule quality_filter_with_bamtools:
     log: "results/logs/snakelogs/quality_filter_with_bamtools.{sample}.log"
     shell:
         """
-        bamtools filter -in {input.marked_bam} -forceCompression -mapQuality '{params.mapQ}' -isDuplicate false -isFailedQC false -isMapped true -isMateMapped true -isPaired true -isPrimaryAlignment true -isProperPair true -out {output.filtered_bam}
+        bamtools filter -in {input.marked_bam} -forceCompression -mapQuality '{params.mapQ}' -insertSize '{params.max_size}' -isDuplicate false -isFailedQC false -isMapped true -isMateMapped true -isPaired true -isPrimaryAlignment true -isProperPair true -out {output.filtered_bam}
         samtools index {output.filtered_bam}
         """
 
